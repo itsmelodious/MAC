@@ -20,11 +20,15 @@ class User(ndb.Model):
         url = '/userinfo?key=' + self.key.urlsafe()
         return url
 
+class Driver(ndb.Model):
+    driver_boolean = ndb.BooleanProperty()
+
 class Trip(ndb.Model):
     tripname = ndb.StringProperty()
     trippassword = ndb.StringProperty()
     user_key = ndb.KeyProperty(kind=User)
     destination = ndb.StringProperty()
+    driver_key = ndb.KeyProperty(kind=Driver)
     def url(self):
         url = '/tripinfo?key=' + self.key.urlsafe()
         return url
@@ -54,10 +58,12 @@ class CreateAccountHandler(webapp2.RequestHandler):
 
 class UserInfoHandler(webapp2.RequestHandler):
     def get(self):
+        userinfo = User.query().fetch()
         logout_url = users.create_logout_url('/')
-        vals = {'logout_url': logout_url}
+        vals = {'logout_url': logout_url, 'userinfo':userinfo}
         template = jinja_environment.get_template('userinfo.html')
         self.response.write(template.render(vals))
+
 
 
 class MainPageHandler(webapp2.RequestHandler):
