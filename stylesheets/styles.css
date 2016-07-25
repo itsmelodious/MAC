@@ -1,7 +1,7 @@
 input {
-  margin: 20px 0px;
+  margin-top: 5px;
 }
 
-body {
-  background-color: blue;
+button {
+  margin-top: 5px;
 }
