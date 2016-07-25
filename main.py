@@ -2,6 +2,7 @@ import webapp2
 import jinja2
 import os
 import random
+from google.appengine.api import user
 from google.appengine.ext import ndb
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -28,6 +29,8 @@ class MainPageHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('mainpage.html')
         self.response.write(template.render())
     def post(self):
+        user = user.get_current_user()
+        email = user.email()
         username = self.request.get('username')
         pw = self.request.get('pw')
         self.redirect('/mainpage')
