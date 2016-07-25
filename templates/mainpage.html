@@ -6,6 +6,14 @@
   </head>
 
   <body>
-    Hello World!
+    <button><a href="/newtrip">Create a Trip</a></button><br>
+    <button><a href="/jointrip">Join a Trip</a></button>
+    <ul>
+      <h2>Your trips</h2>
+      <!-- {% for trip in trips %}
+        <li><a href="/tripinfo?key={{ trip.key }}">{{ trip.name }}</a></li>
+      {% endfor %} -->
+      <li><a href="/tripinfo">Trip Name</a></li>
+    </ul>
   </body>
 </html>
