@@ -27,6 +27,10 @@ class MainPageHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('mainpage.html')
         self.response.write(template.render())
+    def post(self):
+        username = self.request.get('username')
+        pw = self.request.get('pw')
+        self.redirect('/mainpage')
 
 class CreateTripHandler(webapp2.RequestHandler):
     def get(self):
