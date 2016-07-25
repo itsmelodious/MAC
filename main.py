@@ -15,6 +15,22 @@ class User(ndb.Model):
     food = ndb.StringProperty()
     personality = ndb.StringProperty()
     driver = ndb.BooleanProperty()
+    # When we want to access user trips, query the trip with the user_key and list trips
+
+class Trip(ndb.Model):
+    tripname = ndb.StringProperty()
+    trippassword = ndb.StringProperty()
+    user_key = ndb.KeyProperty(kind=User)
+    destination = ndb.StringProperty()
+
+    def url(self):
+        url = '/tripinfo?key=' + self.key.urlsafe()
+        return url
+
+class Car(ndb.Model):
+    trip_key = ndb.KeyProperty(kind=Trip)
+    seats = ndb.IntegerProperty()
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
