@@ -64,6 +64,10 @@ class JoinTripHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('jointrip.html')
         self.response.write(template.render())
+    def post(self):
+        tripname = self.request.get('tripname')
+        trippw = self.request.get('trippw')
+        self.redirect('/jointrip')
 
 class CreateAccountHandler(webapp2.RequestHandler):
     def get(self):
