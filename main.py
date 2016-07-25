@@ -2,7 +2,7 @@ import webapp2
 import jinja2
 import os
 import random
-from google.appengine.api import user
+from google.appengine.api import users
 from google.appengine.ext import ndb
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
