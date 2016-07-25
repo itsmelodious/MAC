@@ -10,8 +10,9 @@ jinja_environment = jinja2.Environment(
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('home.html')
-        self.response.write(template.render())
+        self.response.write('hello')
+        # template = jinja_environment.get_template('home.html')
+        # self.response.write(template.render())
 
 class CreateAccountHandler(webapp2.RequestHandler):
     def get(self):
