@@ -20,17 +20,26 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if user:
-            self.redirect('/mainpage')
-            # nickname = user.nickname()
-            # logout_url = users.create_logout_url('/')
-            # greeting = 'Welcome, {}! (<a href="{}">sign out</a>)'.format(
-            #     nickname, logout_url)
+            nickname = user.nickname()
+            logout_url = users.create_logout_url('/')
+            greeting = 'Welcome, {}! (<a href="{}">sign out</a>)'.format(
+                nickname, logout_url)
         else:
             login_url = users.create_login_url('/')
             greeting = '<a href="{}">Sign in</a>'.format(login_url)
 
-        # self.response.write(
-        #     '<html><body>{}</body></html>'.format(greeting))
+        self.response.write(
+            '<html><body>{}</body></html>'.format(greeting))
+            
+        user = users.get_current_user()
+        if user:
+            self.redirect('/mainpage')
+
+        else:
+            login_url = users.create_login_url('/')
+            greeting = '<a href="{}">Sign in</a>'.format(login_url)
+
+
         template = jinja_environment.get_template('home.html')
         self.response.write(template.render())
 
@@ -41,8 +50,15 @@ class CreateAccountHandler(webapp2.RequestHandler):
 
 class UserInfoHandler(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        nickname = user.nickname()
+        logout_url = users.create_logout_url('/')
+        greeting = 'Welcome, {}! (<a href="{}">sign out</a>)'.format(nickname, logout_url)
+        self.response.write(
+            '<html><body>{}</body></html>'.format(greeting))
         template = jinja_environment.get_template('userinfo.html')
         self.response.write(template.render())
+
 
 class MainPageHandler(webapp2.RequestHandler):
     def get(self):
