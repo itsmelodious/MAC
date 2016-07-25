@@ -9,6 +9,12 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_environment = jinja2.Environment(
   loader=jinja2.FileSystemLoader(template_dir))
 
+# class User(ndb.Model):
+#     # name = ndb.StringProperty()
+#     # music =
+#     # food =
+#     # personality =
+#     # driver = ndb.
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
