@@ -25,7 +25,7 @@ class MainHandler(webapp2.RequestHandler):
         # This creates the login link
         login_url = users.create_login_url('/')
 
-        template = jinja_environment.get_template('home.html')
+        template = jinja_environment.get_template('login.html')
         vals = {'login_url': login_url}
         self.response.write(template.render(vals))
 
