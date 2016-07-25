@@ -11,6 +11,18 @@ jinja_environment = jinja2.Environment(
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        if user:
+            nickname = user.nickname()
+            logout_url = users.create_logout_url('/')
+            greeting = 'Welcome, {}! (<a href="{}">sign out</a>)'.format(
+                nickname, logout_url)
+        else:
+            login_url = users.create_login_url('/')
+            greeting = '<a href="{}">Sign in</a>'.format(login_url)
+
+        self.response.write(
+            '<html><body>{}</body></html>'.format(greeting))
         template = jinja_environment.get_template('home.html')
         self.response.write(template.render())
 
@@ -29,7 +41,6 @@ class MainPageHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('mainpage.html')
         self.response.write(template.render())
     def post(self):
-        user = user.get_current_user()
         email = user.email()
         username = self.request.get('username')
         pw = self.request.get('pw')
