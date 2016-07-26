@@ -7,8 +7,9 @@
   </head>
 
   <body>
+    {{trip.tripname}}
     <!-- Need list of drivers first for this to work-->
-    {% for i in tripinfo.drivers %}
+    {% for i in trip.drivers %}
       <img src="/images/car.png" width=300px>
     {% endfor %}
   </body>

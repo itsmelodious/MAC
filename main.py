@@ -58,7 +58,9 @@ class CreateAccountHandler(webapp2.RequestHandler):
 
 class UserInfoHandler(webapp2.RequestHandler):
     def get(self):
-        userinfo = User.query().fetch() #should change to .get(userkey) so it only displays the info for the specific user
+        user = users.get_current_user()
+        userinfo = user.get(userkey)
+        # userinfo = User.query().fetch() #should change to .get(userkey) so it only displays the info for the specific user
         # This creates the sign out link.
         logout_url = users.create_logout_url('/')
         vals = {'logout_url': logout_url, 'userinfo': userinfo}
@@ -84,8 +86,10 @@ class CreateTripHandler(webapp2.RequestHandler):
 
 class TripInfoHandler(webapp2.RequestHandler):
     def get(self):
-        tripinfo = Trip.query().fetch()
-        vals = {'tripinfo': tripinfo}
+        urlsafe_key = self.request.get('key')
+        key = ndb.Key(urlsafe=urlsafe_key)
+        trip = key.get()
+        vals = {'trip': trip}
         template = jinja_environment.get_template('tripinfo.html')
         self.response.write(template.render(vals))
 
