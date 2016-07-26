@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
-    <style>
+    <!-- <style>
       body {
-        background-color: grey;
+        background-color: #97AEF2;
+        color: white;
+        text-shadow: 0px 0px 1px black;
         text-align: center;
         font-family: 'Roboto', sans-serif;
       }
@@ -22,13 +24,12 @@
       .car {
         padding: 5px;
         float: left;
-        color: white;
       }
 
       .container {
         margin: 5px;
         min-width: 330px;
-        min-height: 180px;
+        min-height: 190px;
         background-image: url(car.png);
         background-size: 100% 100%;
         background-repeat: no-repeat;
@@ -39,7 +40,21 @@
         padding-bottom: 5px;
         padding-left: 25px;
       }
-    </style>
+
+      #drivername {
+        margin: 0px;
+      }
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      #edittrip {
+        width: 100%;
+        display: inline-block;
+      }
+    </style> -->
   </head>
 
   <body>
@@ -49,7 +64,7 @@
     {% endfor %} -->
     <h1>Trip Name Here</h1>
     <div class="car">
-      <div class="names">
+      <div class="names" id="drivername">
         <h3>Driver Name</h3>
       </div>
       <div class="container">
@@ -69,7 +84,7 @@
     </div>
 
     <div class="car">
-      <div class="names">
+      <div class="names" id="drivername">
         <h3>Driver Name</h3>
       </div>
       <div class="container">
@@ -82,7 +97,7 @@
     </div>
 
     <div class="car">
-      <div class="names">
+      <div class="names" id="drivername">
         <h3>Driver Name</h3>
       </div>
       <div class="container">
@@ -98,7 +113,7 @@
     </div>
 
     <div class="car">
-      <div class="names">
+      <div class="names" id="drivername">
         <h3>Driver Name</h3>
       </div>
       <div class="container">
@@ -112,6 +127,9 @@
         </div>
       </div>
     </div>
-    <a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a>
+
+    <div id="edittrip">
+      <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
+    </div>
   </body>
 </html>
