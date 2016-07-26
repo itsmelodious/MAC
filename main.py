@@ -107,11 +107,12 @@ class TripInfoHandler(webapp2.RequestHandler):
                 if trip.tripname == tripname and trip.trippassword == trippw:
                     foundtrip = trip
 
+            #if user put name and password correctly:
             if foundtrip:
                 # do stuff
 
             else:
-            #display this trip does not exist
+                #display this trip does not exist
 
         # If the user is a driver, add the user to the list of drivers.
         if drivers == 'yes':
