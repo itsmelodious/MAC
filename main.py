@@ -28,6 +28,7 @@ class Trip(ndb.Model):
     user_key = ndb.KeyProperty(kind=User, repeated=True)
     destination = ndb.StringProperty()
     drivers = ndb.StringProperty(repeated=True)
+    passengers = ndb.StringProperty(repeated=True)
 
     def url(self):
         url = '/tripinfo?key=' + self.key.urlsafe()
@@ -93,10 +94,11 @@ class MainPageHandler(webapp2.RequestHandler):
         drivers = self.request.get('driver')
         destination = self.request.get('destination')
         action = self.request.get('action')
-        seats = int(self.request.get('seats'))
+
         if action == 'create':
             if drivers == "yes":
                 # Create a new trip
+                seats = int(self.request.get('seats'))
                 newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], drivers = [user.email()])
                 newtrip.put()
                 newcar = Car(trip_key=newtrip.key, seats=seats, driver_key= userkey)
@@ -104,7 +106,7 @@ class MainPageHandler(webapp2.RequestHandler):
 
             else:
                 # Create a new trip
-                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey])
+                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], passengers = [user.email()])
                 newtrip.put()
         else:
             # Loop through the list of trips.
@@ -114,6 +116,7 @@ class MainPageHandler(webapp2.RequestHandler):
                     foundtrip = True
             if foundtrip:
                 if drivers == "yes":
+                    seats = int(self.request.get('seats'))
                     trip = Trip.query(Trip.tripname==tripname).get()
                     trip.drivers.append(user.email())
                     trip.user_key.append(userkey)
@@ -122,6 +125,7 @@ class MainPageHandler(webapp2.RequestHandler):
                     trip.put()
                 else:
                     trip = Trip.query(Trip.tripname==tripname).get()
+                    trip.passengers.append(user.email())
                     trip.user_key.append(userkey)
                     trip.put()
             else:
