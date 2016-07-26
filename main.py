@@ -58,7 +58,9 @@ class CreateAccountHandler(webapp2.RequestHandler):
 
 class UserInfoHandler(webapp2.RequestHandler):
     def get(self):
-        userinfo = User.query().fetch() #should change to .get(userkey) so it only displays the info for the specific user
+        user = users.get_current_user()
+        userinfo = user.get(userkey)
+        # userinfo = User.query().fetch() #should change to .get(userkey) so it only displays the info for the specific user
         # This creates the sign out link.
         logout_url = users.create_logout_url('/')
         vals = {'logout_url': logout_url, 'userinfo': userinfo}
@@ -67,8 +69,10 @@ class UserInfoHandler(webapp2.RequestHandler):
 
 class MainPageHandler(webapp2.RequestHandler):
     def get(self):
+        trips = Trip.query().fetch()
+        vals = {'trips': trips}
         template = jinja_environment.get_template('mainpage.html')
-        self.response.write(template.render())
+        self.response.write(template.render(vals))
 
     def post(self):
         username = self.request.get('username')
@@ -82,8 +86,12 @@ class CreateTripHandler(webapp2.RequestHandler):
 
 class TripInfoHandler(webapp2.RequestHandler):
     def get(self):
+        urlsafe_key = self.request.get('key')
+        key = ndb.Key(urlsafe=urlsafe_key)
+        trip = key.get()
+        vals = {'trip': trip}
         template = jinja_environment.get_template('tripinfo.html')
-        self.response.write(template.render())
+        self.response.write(template.render(vals))
 
     def post(self):
         user = users.get_current_user()
@@ -96,27 +104,29 @@ class TripInfoHandler(webapp2.RequestHandler):
 
         # Create a new trip.
         if action == 'create':
-            newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key=user)
+            newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination)
             newtrip.put()
+            # if drivers == "yes":
+            #     newdriver = Car(trip_key)
 
         else:
             foundtrip = None
 
             # Loop through the list of trips.
-            for trip in Trip.query().fetch():
-                if trip.tripname == tripname and trip.trippassword == trippw:
-                    foundtrip = trip
-
-            #if user put name and password correctly:
-            if foundtrip:
-                # do stuff
-
-            else:
-                #display this trip does not exist
-
-        # If the user is a driver, add the user to the list of drivers.
-        if drivers == 'yes':
-            drivers_list.append(user.name)
+        #     for trip in Trip.query().fetch():
+        #         if trip.tripname == tripname and trip.trippassword == trippw:
+        #             foundtrip = trip
+        #
+        #     #if user put name and password correctly:
+        #     # if foundtrip:
+        #     #     # do stuff
+        #     #
+        #     # else:
+        #         #display this trip does not exist
+        #
+        # # If the user is a driver, add the user to the list of drivers.
+        # if drivers == 'yes':
+        #     drivers_list.append(user.name)
         self.redirect('/tripinfo')
 
 class JoinTripHandler(webapp2.RequestHandler):
