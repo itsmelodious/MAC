@@ -36,6 +36,7 @@ class Trip(ndb.Model):
 class Car(ndb.Model):
     trip_key = ndb.KeyProperty(kind=Trip)
     seats = ndb.IntegerProperty()
+    driver_key = ndb.KeyProperty(kind=User)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -60,17 +61,23 @@ class CreateAccountHandler(webapp2.RequestHandler):
 class UserInfoHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
+        # userinfo = User.query(User.email==user.email()).fetch()
         # userinfo = User.query().fetch() #should change to .get(userkey) so it only displays the info for the specific user
         # This creates the sign out link.
         logout_url = users.create_logout_url('/')
-        vals = {'logout_url': logout_url, 'user': user}
+        vals = {'logout_url': logout_url, 'user':user}
         template = jinja_environment.get_template('userinfo.html')
         self.response.write(template.render(vals))
 
 class MainPageHandler(webapp2.RequestHandler):
     def get(self):
+        trips=[]
         user = users.get_current_user()
-        trips = Trip.query().fetch()
+        query = User.query(User.email==user.email()).get()
+        userkey = query.key
+        for trip in Trip.query().fetch():
+            if userkey in trip.user_key:
+                trips.append(trip)
         vals = {'trips': trips, 'user':user}
         template = jinja_environment.get_template('mainpage.html')
         self.response.write(template.render(vals))
@@ -86,37 +93,41 @@ class MainPageHandler(webapp2.RequestHandler):
         drivers = self.request.get('driver')
         destination = self.request.get('destination')
         action = self.request.get('action')
-        seats = self.request.get('seats')
-        # trip_key_urlsafe = self.request.get('key')
-        # trip_key = ndb.Key(urlsafe=trip_key_urlsafe)
-        # trip = trip_key.get()
+        seats = int(self.request.get('seats'))
         if action == 'create':
             if drivers == "yes":
                 # Create a new trip
-                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey])
+                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], drivers = [user.email()])
                 newtrip.put()
+                newcar = Car(trip_key=newtrip.key, seats=seats, driver_key= userkey)
+                newcar.put()
+
             else:
                 # Create a new trip
                 newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey])
                 newtrip.put()
- #        else:
- #            # Loop through the list of trips.
- # #            for trip in Trip.query().fetch():
- # #                if trip.tripname == tripname and trip.trippassword == trippw:
- # #                    foundtrip = trip
- # #                    if drivers == "yes":
- # #                        newdriver = Car(trip_key=trip, seats=seats)
- # #                else:
- # #                    self.response.write('Error')
- # #
- # #
- # # #        if foundtrip:
- # # # do stuff
- # # #
- # # #
- # # #    If the user is a driver, add the user to the list of drivers.
- # # #    if drivers == 'yes':
- # # #        drivers_list.append(user.name)
+        else:
+            # Loop through the list of trips.
+            foundtrip = None
+            for trip in Trip.query().fetch():
+                if trip.tripname == tripname and trip.trippassword == trippw:
+                    foundtrip = True
+            if foundtrip:
+                if drivers == "yes":
+                    trip = Trip.query(Trip.tripname==tripname).get()
+                    trip.drivers.append(user.email())
+                    trip.user_key.append(userkey)
+                    newcar = Car(trip_key=trip.key, seats=seats, driver_key=userkey)
+                    newcar.put()
+                    trip.put()
+                else:
+                    trip = Trip.query(Trip.tripname==tripname).get()
+                    trip.user_key.append(userkey)
+                    trip.put()
+            else:
+                self.response.write('Error')
+                return
+
         self.redirect('/mainpage')
 
 class CreateTripHandler(webapp2.RequestHandler):
@@ -134,7 +145,6 @@ class TripInfoHandler(webapp2.RequestHandler):
         self.response.write(template.render(vals))
 
         # user = users.get_current_user()
-
 
 class JoinTripHandler(webapp2.RequestHandler):
     def get(self):
