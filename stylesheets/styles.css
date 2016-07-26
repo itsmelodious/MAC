@@ -5,3 +5,15 @@ input {
 div.login {
   margin-bottom: 20px;
 }
+
+button.right {
+  float: right;
+}
+
+/*button.left {
+  float: left;
+}*/
+
+div {
+  overflow: hidden;
+}
