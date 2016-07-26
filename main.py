@@ -104,13 +104,13 @@ class TripInfoHandler(webapp2.RequestHandler):
 
         # Create a new trip.
         if action == 'create':
-            newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination)
-            newtrip.put()
+            trip = Trip(tripname=tripname, trippassword=trippw, destination=destination)
+            trip.put()
             # if drivers == "yes":
             #     newdriver = Car(trip_key)
 
         else:
-            foundtrip = None
+            trip = None
 
             # Loop through the list of trips.
         #     for trip in Trip.query().fetch():
@@ -127,7 +127,7 @@ class TripInfoHandler(webapp2.RequestHandler):
         # # If the user is a driver, add the user to the list of drivers.
         # if drivers == 'yes':
         #     drivers_list.append(user.name)
-        self.redirect('/tripinfo')
+        self.redirect('/tripinfo?key=' + trip.key.urlsafe())
 
 class JoinTripHandler(webapp2.RequestHandler):
     def get(self):
@@ -146,8 +146,12 @@ class CreateAccountHandler(webapp2.RequestHandler):
 
 class EditTripHandler(webapp2.RequestHandler):
     def get(self):
+        urlsafe_key = self.request.get('key')
+        key = ndb.Key(urlsafe=urlsafe_key)
+        trip = key.get()
+        vals = {'trip': trip}
         template = jinja_environment.get_template('editrip.html')
-        self.response.write(template.render())
+        self.response.write(template.render(vals))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
