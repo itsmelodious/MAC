@@ -99,10 +99,11 @@ class TripInfoHandler(webapp2.RequestHandler):
             for trip in Trip.query().fetch():
                 if trip.tripname == tripname and trip.trippassword == trippw:
                     foundtrip = trip
+            #if user put name and password correctly:
             if foundtrip:
                 # do stuff
             else:
-            #display this trip does not exist
+                #display this trip does not exist
         # vvvv don't want to make a new trip every time we join a trip b/c currently create a trip and join a trip are linking to the same page.
 
         if drivers == 'yes':
