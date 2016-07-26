@@ -94,6 +94,8 @@ class TripInfoHandler(webapp2.RequestHandler):
         if action == 'create':
             newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key=user)
             newtrip.put()
+            if drivers == "yes":
+                newdriver = Car(trip_key)
         else:
             foundtrip = None
             for trip in Trip.query().fetch():
