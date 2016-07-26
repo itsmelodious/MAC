@@ -12,13 +12,13 @@
     {% for driver in trip.drivers %}
       <div class="car">
         <div class="names" id="drivername">
-          <h3>{{ driver.email }}<h3>
+          <h3>{{ driver }}</h3>
         </div>
         <div class="container">
           <div class="names">
             <ul>
               {% for passenger in trip.passengers %}
-              <li>{{ passenger.email }}</li>
+              <li>{{ passenger }}</li>
               {% endfor %}
             </ul>
           </div>
