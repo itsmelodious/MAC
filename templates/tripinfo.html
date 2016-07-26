@@ -4,70 +4,112 @@
     <meta charset="utf-8">
     <title>Trip Info</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 
     <style>
+      body {
+        background-color: grey;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+      }
+
       .car {
+        padding: 5px;
+        float: left;
+        color: white;
+      }
+
+      .container {
         margin: 5px;
-        position: fixed;
-        z-index: 1;
+        min-width: 330px;
+        min-height: 180px;
+        background-image: url(car.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+      }
+
+      .names {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 25px;
       }
     </style>
   </head>
 
   <body>
-    {{trip.tripname}}
-    <!-- {% for drivers in trip.drivers %}
+    <!-- {{trip.tripname}}
+    {% for drivers in trip.drivers %}
       <img src="/images/car.png" width=300px>
     {% endfor %} -->
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
+    <h1>Trip Name Here</h1>
+    <div class="car">
       <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
+        <h3>Driver Name</h3>
+      </div>
+      <div class="container">
+        <div class="names">
+          <ul>
+            <li>A really really long Name 1 here</li>
+            <li>Name 2</li>
+            <li>Name 3</li>
+            <li>Name 4</li>
+            <li>Name 5</li>
+            <li>Name 6</li>
+            <li>Another really really long Name 7 here</li>
+            <li>Name 8</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
+    <div class="car">
       <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
+        <h3>Driver Name</h3>
+      </div>
+      <div class="container">
+        <div class="names" width=45%>
+          <ul>
+            <li>Name 1</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
+    <div class="car">
       <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
+        <h3>Driver Name</h3>
+      </div>
+      <div class="container">
+        <div class="names">
+          <ul>
+            <li>Name 1</li>
+            <li>Name 2</li>
+            <li>Name 3</li>
+            <li>Name 4</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
+    <div class="car">
       <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
+        <h3>Driver Name</h3>
+      </div>
+      <div class="container">
+        <div class="names">
+          <ul>
+            <li>Name 1</li>
+            <li>Name 2</li>
+            <li>Name 3</li>
+            <li>Name 4</li>
+          </ul>
+        </div>
       </div>
     </div>
   </body>
