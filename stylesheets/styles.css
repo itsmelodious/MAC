@@ -14,7 +14,9 @@ ul {
 
 .car {
   padding: 5px;
-  float: left;
+  /*float: left;*/
+  width: 350px;
+  margin: 0px auto;
 }
 
 .container {
