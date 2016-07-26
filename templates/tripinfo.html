@@ -4,13 +4,71 @@
     <meta charset="utf-8">
     <title>Trip Info</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
+
+    <style>
+      .car {
+        margin: 5px;
+        position: fixed;
+        z-index: 1;
+      }
+    </style>
   </head>
 
   <body>
     {{trip.tripname}}
-    <!-- Need list of drivers first for this to work-->
-    {% for i in trip.drivers %}
+    <!-- {% for drivers in trip.drivers %}
       <img src="/images/car.png" width=300px>
-    {% endfor %}
+    {% endfor %} -->
+    <div>
+      <h3>Driver Name<h3>
+      <img class="car" src="car.png" width=46.5%>
+      <div class="names">
+        <ul>
+          <li>Name 1</li>
+          <li>Name 2</li>
+          <li>Name 3</li>
+          <li>Name 4</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h3>Driver Name<h3>
+      <img class="car" src="car.png" width=46.5%>
+      <div class="names">
+        <ul>
+          <li>Name 1</li>
+          <li>Name 2</li>
+          <li>Name 3</li>
+          <li>Name 4</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h3>Driver Name<h3>
+      <img class="car" src="car.png" width=46.5%>
+      <div class="names">
+        <ul>
+          <li>Name 1</li>
+          <li>Name 2</li>
+          <li>Name 3</li>
+          <li>Name 4</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h3>Driver Name<h3>
+      <img class="car" src="car.png" width=46.5%>
+      <div class="names">
+        <ul>
+          <li>Name 1</li>
+          <li>Name 2</li>
+          <li>Name 3</li>
+          <li>Name 4</li>
+        </ul>
+      </div>
+    </div>
   </body>
 </html>
