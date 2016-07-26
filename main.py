@@ -9,14 +9,13 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_environment = jinja2.Environment(
   loader=jinja2.FileSystemLoader(template_dir))
 
-# Creates an empty list of drivers.
-drivers_list = []
 
 class User(ndb.Model):
     name = ndb.StringProperty()
     music = ndb.StringProperty()
     food = ndb.StringProperty()
     personality = ndb.StringProperty()
+    email = ndb.StringProperty()
     # When we want to access user trips, query the trip with the user_key and list trips
 
     def url(self):
@@ -26,8 +25,9 @@ class User(ndb.Model):
 class Trip(ndb.Model):
     tripname = ndb.StringProperty()
     trippassword = ndb.StringProperty()
-    user_key = ndb.KeyProperty(kind=User)
+    user_key = ndb.KeyProperty(kind=User, repeated=True)
     destination = ndb.StringProperty()
+    drivers = ndb.StringProperty(repeated=True)
 
     def url(self):
         url = '/tripinfo?key=' + self.key.urlsafe()
@@ -42,6 +42,9 @@ class MainHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         # If the user is logged in, then redirect to the main page.
         if user:
+            if not User.query(User.email==user.email()).fetch():
+                newuser = User(email=user.email())
+                newuser.put()
             self.redirect('/mainpage')
         # This creates the sign in link.
         login_url = users.create_login_url('/')
@@ -73,6 +76,9 @@ class MainPageHandler(webapp2.RequestHandler):
         self.response.write(template.render(vals))
 
     def post(self):
+        user = users.get_current_user()
+        query = User.query(User.email==user.email()).get()
+        userkey = query.key
         username = self.request.get('username')
         pw = self.request.get('pw')
         tripname = self.request.get('tripname')
@@ -81,13 +87,18 @@ class MainPageHandler(webapp2.RequestHandler):
         destination = self.request.get('destination')
         action = self.request.get('action')
         seats = self.request.get('seats')
-        trip_key_urlsafe = self.request.get('key')
-        trip_key = ndb.Key(urlsafe=trip_key_urlsafe)
-        trip = trip_key.get()
+        # trip_key_urlsafe = self.request.get('key')
+        # trip_key = ndb.Key(urlsafe=trip_key_urlsafe)
+        # trip = trip_key.get()
         if action == 'create':
-            # Create a new trip
-            newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= trip_key)
-            newtrip.put()
+            if drivers == "yes":
+                # Create a new trip
+                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey])
+                newtrip.put()
+            else:
+                # Create a new trip
+                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey])
+                newtrip.put()
  #        else:
  #            # Loop through the list of trips.
  # #            for trip in Trip.query().fetch():
@@ -106,7 +117,7 @@ class MainPageHandler(webapp2.RequestHandler):
  # # #    If the user is a driver, add the user to the list of drivers.
  # # #    if drivers == 'yes':
  # # #        drivers_list.append(user.name)
- # # #        self.redirect('/mainpage')
+        self.redirect('/mainpage')
 
 class CreateTripHandler(webapp2.RequestHandler):
     def get(self):
