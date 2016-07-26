@@ -10,6 +10,11 @@
     <form method="post" action ="/tripinfo">
         <input type="text" name="tripname" placeholder="Name of the trip"/><br>
         <input type="password" name="trippw" placeholder="Password"/><br>
+        <input type="text" name="destination" placeholder="Destination"/><br>
+        <input type="hidden" name="action" value="create"/>
+        <p>Are you a driver?</p>
+        <input type="radio" name="driver" value="yes">Yes<br>
+        <input type="radio" name="driver" value="no">No<br>
       <input type="submit" value="Submit">
     </form>
   </body>
