@@ -251,7 +251,7 @@ class EditInfoHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
-    ('/editinfo', EditInfoHandler)
+    ('/editinfo', EditInfoHandler),
     ('/newaccount', CreateAccountHandler),
     ('/userinfo', UserInfoHandler),
     ('/mainpage', MainPageHandler),
