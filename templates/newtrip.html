@@ -4,47 +4,47 @@
     <title>New Trip</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-
-    <style>
-      body {
-        background-color: #97AEF2;
-        color: white;
-        text-align: center;
-        font-family: 'Roboto', sans-serif;
-      }
-
-      input {
-        margin-top: 5px;
-        height: 15px;
-        width: auto;
-        padding: 5px;
-      }
-    </style>
   </head>
 
   <body>
-    <strong><h1>Pear</h1></strong>
-    <h2>Create a New Trip</h2>
+    <header>
+      <div class="appname">
+        <strong><h1>Pear</h1></strong>
+      </div>
 
-    <form method="post" action ="/mainpage">
-        <input type="text" name="tripname" placeholder="Name of the trip"><br>
-        <input type="password" name="trippw" placeholder="Password"><br>
-        <input type="text" name="destination" placeholder="Destination"><br>
-        <input type="hidden" name="action" value="create">
+      <!-- Navigation Bar -->
+      <div class="nav">
+        <ul>
+          <li><a href="/mainpage">Home</a></li>
+          <li class="active"><a href="/newtrip">Create</a></li>
+          <li><a href="/jointrip">Join</a></li>
+          <li><a href="/userinfo">User</a></li>
+        </ul>
+      </div>
+    </header>
 
-        <p>
-          Are you a driver?<br>
-          <label><input type="radio" name="driver" value="yes"> Yes</label><br>
-          <label><input type="radio" name="driver" value="no"> No</label><br>
-        </p>
+    <!-- Content -->
+    <section class="content">
+      <h2>Create a New Trip</h2>
 
-        <p>
-          If yes, how many seats? (including yourself)<br>
-          <input type="number" name="seats">
-        </p>
-      <input type="submit" value="Submit">
-    </form>
+      <form method="post" action ="/mainpage">
+          <input type="text" name="tripname" placeholder="Name of the trip"><br>
+          <input type="password" name="trippw" placeholder="Trip Password"><br>
+          <input type="text" name="destination" placeholder="Destination"><br>
+          <input type="hidden" name="action" value="create">
 
-    <button><a href="/mainpage">Back</a></button>
+          <p>
+            Are you a driver?<br>
+            <label><input type="radio" name="driver" value="yes"> Yes</label><br>
+            <label><input type="radio" name="driver" value="no"> No</label><br>
+          </p>
+
+          <p>
+            If yes, how many seats? (including yourself)<br>
+            <input type="number" name="seats" placeholder="Enter a number">
+          </p>
+        <input type="submit" value="Submit">
+      </form>
+    </section>
   </body>
 </html>

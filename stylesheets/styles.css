@@ -67,7 +67,7 @@ li.active {
   background-color: lightblue;
   min-width: 365px;
   width: auto;
-  margin: 20px 25%;
+  margin: 40px 25%;
   padding-bottom: 10px;
   border-radius: 20px;
   overflow: hidden;
@@ -127,5 +127,12 @@ div {
 /* Forms */
 input {
   margin-top: 5px;
+  height: 15px;
+  width: auto;
+  padding: 3px;
 }
 /* End of forms */
+
+hr {
+  padding: 0 25%;
+}

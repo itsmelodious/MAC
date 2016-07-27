@@ -8,11 +8,28 @@
   </head>
 
   <body>
-    <strong><h1>Pear</h1></strong>
-    <p>
-      {{user}}
-      <a href="{{ logout_url }}">Sign out</a>
-    </p>
-    <button><a href="/mainpage">Back</a></button>
+    <header>
+      <div class="appname">
+        <strong><h1>Pear</h1></strong>
+      </div>
+
+      <!-- Navigation Bar -->
+      <div class="nav">
+        <ul>
+          <li><a href="/mainpage">Home</a></li>
+          <li><a href="/newtrip">Create</a></li>
+          <li><a href="/jointrip">Join</a></li>
+          <li><a href="/userinfo">User</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <section class="content">
+      <p>
+        {{user}}
+        <a href="{{ logout_url }}">Sign out</a>
+      </p>
+    </section>
   </body>
 </html>

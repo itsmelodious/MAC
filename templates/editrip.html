@@ -8,38 +8,56 @@
   </head>
 
   <body>
-    <strong><h1>Pear</h1></strong>
-    <!-- Enables creator to edit trip name and trip password -->
-    <form action="{{ trip.url() }}" method="post">
-      <h2>Edit Trip</h2>
-      <h3>Trip Name</h3>
-      <input type="text" name ="tripname" value={{trip.tripname}} >
-      <h3>Trip Password</h3>
-      <input type="text" name ="trippw" value={{trip.trippassword}}>
-      <input type="submit" value="Submit">
-    </form>
+    <header>
+      <div class="appname">
+        <strong><h1>Pear</h1></strong>
+      </div>
 
-    <!-- Shows a table of current people participating in the road trip -->
-    <h2>List of People</h2>
-    <form class="Student" method="post" action="">
-      <body>
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Delete</th>
-          </tr>
-          <tr>
-            <td>
-            </td>
-          </tr>
-        </table>
-    </form>
+      <!-- Navigation Bar -->
+      <div class="nav">
+        <ul>
+          <li><a href="/mainpage">Home</a></li>
+          <li><a href="/newtrip">Create</a></li>
+          <li><a href="/jointrip">Join</a></li>
+          <li><a href="/userinfo">User</a></li>
+        </ul>
+      </div>
+    </header>
 
-    <!-- Enables creator to add or remove someone from the list -->
-      <p>Add a person</p>
-      <input type="text" name="name"  value="">
-    <!-- Quickly edit destination -->
+    <!-- Content -->
+    <section class="content">
+      <!-- Enables creator to edit trip name and trip password -->
+      <form action="{{ trip.url() }}" method="post">
+        <h2>Edit Trip</h2>
+        <h3>Trip Name</h3>
+        <input type="text" name ="tripname" value={{trip.tripname}} >
+        <h3>Trip Password</h3>
+        <input type="text" name ="trippw" value={{trip.trippassword}}>
+        <input type="submit" value="Submit">
+      </form>
 
-    <!-- Saves work -->
+      <!-- Shows a table of current people participating in the road trip -->
+      <h2>List of People</h2>
+      <form class="Student" method="post" action="">
+        <body>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Delete</th>
+            </tr>
+            <tr>
+              <td>
+              </td>
+            </tr>
+          </table>
+      </form>
+
+      <!-- Enables creator to add or remove someone from the list -->
+        <p>Add a person</p>
+        <input type="text" name="name"  value="">
+      <!-- Quickly edit destination -->
+
+      <!-- Saves work -->
+    </section>
   </body>
 </html>

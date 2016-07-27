@@ -1,36 +1,4 @@
 <!DOCTYPE html>
-<style>
-  body {
-    background: url("images/travelling.jpeg");
-    background-size: 1450px 320px;
-    background-repeat: no-repeat;
-  }
-  #mainpage{
-    color: white;
-    width: 12.5%;
-    height: 100%;
-    text-align: center;
-    background-color: rgb(13, 77, 77);
-    border-radius: 10px;
-    margin-top: 180px;
-    margin-left: 650px;
-  }
-  #yourTrips{
-    color: black;
-    margin: auto;
-    width: 100%;
-    text-align: center;
-    text-decoration: underline;
-  }
-  #userInfoButton{
-
-  }
-  #createTripButton{
-  }
-  #joinTripButton{
-  }
-</style>
-
 <html>
   <head>
     <title>Pear</title>
@@ -39,26 +7,38 @@
   </head>
 
   <body>
-    <strong><h1>Pear</h1></strong>
-    <button class="right" id="userInfoButton"><a href="/userinfo">User Info</a></button>
-    <button class="left" id="createTripButton"><a href="/newtrip">Create a Trip</a></button><br>
-    <button class="left" id="joinTripButton"><a href="/jointrip">Join a Trip</a></button>
-    <div id="mainpage">
-        <h2>Main Page</h2>
+    <header>
+      <div class="appname">
+        <strong><h1>Pear</h1></strong>
+      </div>
 
-    </div>
-    <div>
-      <img src="images/pearlogo.png"/>
-    </div>
-    <div>
-      <ul>
-        <div id="yourTrips">
-        <h3>Your Trips</h3>
-        {% for trip in trips %}
-          <li><a href="{{ trip.url() }}">{{ trip.tripname }}</a></li>
-        {% endfor %}
-        </div>
-      </ul>
-    </div>
+      <!-- Navigation Bar -->
+      <div class="nav">
+        <ul>
+          <li class="active"><a href="/mainpage">Home</a></li>
+          <li><a href="/newtrip">Create</a></li>
+          <li><a href="/jointrip">Join</a></li>
+          <li><a href="/userinfo">User</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <section class="content">
+      <div>
+        <img src="images/pearlogo.png"/>
+      </div>
+
+      <div>
+        <ul>
+          <div id="yourTrips">
+          <h2>Trips</h2>
+          {% for trip in trips %}
+            <li><a href="{{ trip.url() }}">{{ trip.tripname }}</a></li>
+          {% endfor %}
+          </div>
+        </ul>
+      </div>
+    </section>
   </body>
 </html>
