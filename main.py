@@ -240,7 +240,7 @@ class EditTripHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('editrip.html')
         self.response.write(template.render(vals))
 
-class EditInfoHandler(webapp2.RequestHandler):
+class EditUserHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         userinfo = User.query(User.email==user.email()).get()
@@ -251,7 +251,7 @@ class EditInfoHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
-    ('/editinfo', EditInfoHandler),
+    ('/edituser', EditUserHandler),
     ('/newaccount', CreateAccountHandler),
     ('/userinfo', UserInfoHandler),
     ('/mainpage', MainPageHandler),
