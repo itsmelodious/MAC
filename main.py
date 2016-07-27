@@ -5,6 +5,7 @@ import random
 from random import shuffle
 from google.appengine.api import users
 from google.appengine.ext import ndb
+import logging
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_environment = jinja2.Environment(
@@ -36,12 +37,12 @@ class Trip(ndb.Model):
         url = '/tripinfo?key=' + self.key.urlsafe()
         return url
 
-
 class Car(ndb.Model):
     trip_key = ndb.KeyProperty(kind=Trip)
     seats = ndb.IntegerProperty()
     driver_key = ndb.KeyProperty(kind=User)
     passengers = ndb.StringProperty(repeated=True)
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -78,6 +79,16 @@ class UserInfoHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('userinfo.html')
         self.response.write(template.render(vals))
 
+def algorithm(driver, user):
+    points = 0
+    if driver.music == user.music:
+        points += 5
+    if driver.personality == user.personality:
+        points += 4
+    if driver.food == user.food:
+        points += 2
+    return points
+
 class MainPageHandler(webapp2.RequestHandler):
     def get(self):
         trips=[]
@@ -111,12 +122,16 @@ class MainPageHandler(webapp2.RequestHandler):
             newcar.put()
 
         else:
+            foundtrip = 'no'
             # Loop through the list of trips.
-            foundtrip = None
             for trip in Trip.query().fetch():
                 if trip.tripname == tripname and trip.trippassword == trippw:
-                    foundtrip = True
-            if foundtrip:
+                    foundtrip = 'yes'
+                elif trip.tripname == tripname:
+                    foundtrip = 'wrongpass'
+                else:
+                    foundtrip = 'nonexist'
+            if foundtrip=='yes':
                 if drivers == "yes":
                     seats = int(self.request.get('seats'))
                     trip = Trip.query(Trip.tripname==tripname).get()
@@ -130,16 +145,31 @@ class MainPageHandler(webapp2.RequestHandler):
                     tripkey = trip.key
                     cars = Car.query(Car.trip_key==tripkey).fetch()
                     trip.passengers.append(query.name)
-                    car = random.choice(cars)
-                    if len(car.passengers)<(car.seats-1):
-                        car.passengers.append(query.name)
+                    winningpoints = -1
+                    winningcar = None
+                    logging.info('user:' + query.name)
+                    for car in cars:
+                        if not len(car.passengers)<(car.seats-1):
+                            continue
+                        points=algorithm(car.driver_key.get(), query)
+                        if points >= winningpoints:
+                            winningpoints = points
+                            winningcar = car
+                    logging.info('winningcar:' + winningcar.driver_key.get().name)
+                    if winningcar:
+                        winningcar.passengers.append(query.name)
+                    else:
+                        self.response.write('No space left in the cars!')
+                        return
                     trip.user_key.append(userkey)
                     trip.put()
-                    car.put()
-            else:
-                self.response.write('Error')
+                    winningcar.put()
+            elif foundtrip == 'wrongpass':
+                self.response.write("Wrong password!")
                 return
-
+            else:
+                self.response.write("Sorry, that trip doesn't exist")
+                return
         self.redirect('/mainpage')
 
 class CreateTripHandler(webapp2.RequestHandler):
@@ -183,7 +213,7 @@ class CreateAccountHandler(webapp2.RequestHandler):
         personality = self.request.get('personality')
         music = self.request.get('music')
         food = self.request.get('food')
-        newuser = User(email=user.email(), name=name, username=username, genInfo=genInfo, personality=personality, music=music, food=food)
+        newuser = User(email=user.email(), name=name, personality=personality, music=music, food=food)
         newuser.put()
         self.redirect('/mainpage')
 
@@ -195,7 +225,6 @@ class EditTripHandler(webapp2.RequestHandler):
         vals = {'trip':trip}
         template = jinja_environment.get_template('editrip.html')
         self.response.write(template.render(vals))
-
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

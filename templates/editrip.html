@@ -7,38 +7,39 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   </head>
 
-<!-- Enables creator to edit trip name and trip password -->
-  <form action="{{ trip.url() }}" method="post">
-    <strong><h1>Edit Trip</h1></strong>
-    <h3>Trip Name</h3>
-    <input type="text" name ="tripname" value={{trip.tripname}} >
-    <h3>Trip Password</h3>
-    <input type="text" name ="trippw" value={{trip.trippassword}}>
-    <input type="submit" value="Submit">
-  </form>
-
-<!-- Shows a table of current people participating in the road trip -->
-  <h2>List of People</h2>
-  <form class="Student" method="post" action="">
-    <body>
-      <table>
-        <tr>
-          <th>Name</th>
-          <th>Delete</th>
-        </tr>
-        <tr>
-          <td>
-          </td>
-        </tr>
-      </table>
-  </form>
   <body>
+    <strong><h1>Pear</h1></strong>
+    <!-- Enables creator to edit trip name and trip password -->
+    <form action="{{ trip.url() }}" method="post">
+      <h2>Edit Trip</h2>
+      <h3>Trip Name</h3>
+      <input type="text" name ="tripname" value={{trip.tripname}} >
+      <h3>Trip Password</h3>
+      <input type="text" name ="trippw" value={{trip.trippassword}}>
+      <input type="submit" value="Submit">
+    </form>
 
-<!-- Enables creator to add or remove someone from the list -->
-  <p>Add a person</p>
-  <input type="text" name="name"  value="">
-<!-- Quickly edit destination -->
+    <!-- Shows a table of current people participating in the road trip -->
+    <h2>List of People</h2>
+    <form class="Student" method="post" action="">
+      <body>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Delete</th>
+          </tr>
+          <tr>
+            <td>
+            </td>
+          </tr>
+        </table>
+    </form>
 
-<!-- Saves work -->
+    <!-- Enables creator to add or remove someone from the list -->
+      <p>Add a person</p>
+      <input type="text" name="name"  value="">
+    <!-- Quickly edit destination -->
+
+    <!-- Saves work -->
   </body>
 </html>
