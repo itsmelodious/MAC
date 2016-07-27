@@ -242,8 +242,11 @@ class EditTripHandler(webapp2.RequestHandler):
 
 class EditInfoHandler(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        userinfo = User.query(User.email==user.email()).get()
+        vals = {'userinfo':userinfo}
         template = jinja_environment.get_template('edituser.html')
-        self.response.write(template.render())
+        self.response.write(template.render(vals))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
