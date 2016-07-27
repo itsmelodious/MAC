@@ -8,34 +8,27 @@
   </head>
 
 <body>
-  <strong><h1>Create an Account<h1></strong>
-    <form action="/newaccount" method="post">
-      Name
-      <input name="name" placeholder="Name"><br><br>
-      Username
-      <input name="username" placeholder="Username"><br><br>
-      General Info
-      <input name="genInfo" placeholder="General Info"><br><br>
+  <strong><h1>Create an Account</h1></strong>
+  <form action="/newaccount" method="post">
+    <h3>Name: <input name="name" placeholder="Name"></h3>
 
-      <h2> Preferance Quiz </h2>
-        <!-- list of questions music, food, personality -->
-        <h3>What is your personality type?</h3>
-          <label><input type = "radio" name = "personality" value= "1">Introvert</label><br>
-          <input type = "radio" name = "personality" value= "2">Extrovert<br>
-          <input type = "radio" name = "personality" value= "3">Ambiovert<br>
-        <h3>What is your music preferance?</h3>
-          <input type = "radio" name = "music" value= "1">Country<br>
-          <input type = "radio" name = "music" value= "2">EDM<br>
-          <input type = "radio" name = "music" value= "3">Rap<br>
-        <h3>What is your food preferance?</h3>
-          <input type = "radio" name = "food" value= "1">Korean BBQ<br>
-          <input type = "radio" name = "food" value= "2">American BBQ<br>
-          <input type = "radio" name = "food" value= "3">I'm a vegan<br>
-
-          <br><br>
-          <input type = "submit" value ="submit">
-    </form>
-
+    <h2> Preference Quiz </h2>
+    <!-- list of questions music, food, personality -->
+    <h3>What is your personality type?</h3>
+      <label><input type = "radio" name = "personality" value= "1">Introvert</label><br>
+      <label><input type = "radio" name = "personality" value= "2">Extrovert</label><br>
+      <label><input type = "radio" name = "personality" value= "3">Ambiovert</label><br>
+    <h3>What is your music preferance?</h3>
+      <label><input type = "radio" name = "music" value= "1">Country</label><br>
+      <label><input type = "radio" name = "music" value= "2">EDM</label><br>
+      <label><input type = "radio" name = "music" value= "3">Rap</label><br>
+    <h3>What is your food preferance?</h3>
+      <label><input type = "radio" name = "food" value= "1">Korean BBQ</label><br>
+      <label><input type = "radio" name = "food" value= "2">American BBQ</label><br>
+      <label><input type = "radio" name = "food" value= "3">I'm a vegan</label><br>
+      <br><br>
+    <input type = "submit" value ="Create An Account">
+  </form>
 </body>
 
 </html>
