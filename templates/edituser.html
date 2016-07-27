@@ -29,6 +29,7 @@
       <h2>Edit User Info</h2>
       <form action="/userinfo" method="post">
         <h4><input name="name" placeholder="Name" value="{{ userinfo.name }}"></h4>
+        <input type="hidden" name="key" value="{{userinfo.key.urlsafe()}}">
         <hr>
 
         <!-- list of questions music, food, personality -->
