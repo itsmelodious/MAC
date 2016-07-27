@@ -42,6 +42,7 @@ class Car(ndb.Model):
     trip_key = ndb.KeyProperty(kind=Trip)
     seats = ndb.IntegerProperty()
     driver_key = ndb.KeyProperty(kind=User)
+    passengers = ndb.StringProperty(repeated=True)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -154,16 +155,10 @@ class TripInfoHandler(webapp2.RequestHandler):
         key = ndb.Key(urlsafe=urlsafe_key)
         trip = key.get()
         cars = Car.query(Car.trip_key==key).fetch()
-        passengers_copy = trip.passengers
-        randompasseng = []
-        # randompasseng = shuffle(passengers_copy)
-        for passenger in passengers_copy:
-            x = random.choice(passengers_copy)
-            if x not in randompasseng:
-                randompasseng.append(x)
-            else:
-                break
-        vals = {'trip': trip, 'cars': cars, 'randompasseng': randompasseng}
+        for passenger in trip.passengers:
+            car = random.choice(cars)
+            car.passengers.append(passenger)
+        vals = {'trip': trip, 'cars': cars}
         template = jinja_environment.get_template('tripinfo.html')
         self.response.write(template.render(vals))
     def post(self):

@@ -20,11 +20,8 @@
           <!-- Display the list of passenger names -->
           <div class="names">
             <ul>
-              {% for seat in range(car.seats) %}
-                    {% if randompasseng!= [] %}
-                      <li>{{randompasseng.pop()}}</li>
-                    {% else: %}
-                      {% endif %}
+              {% for passenger in car.passengers %}
+                  <li>{{passenger}}</li>
               {% endfor %}
             </ul>
           </div>
