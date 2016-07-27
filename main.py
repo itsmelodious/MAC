@@ -78,6 +78,20 @@ class UserInfoHandler(webapp2.RequestHandler):
         vals = {'logout_url': logout_url, 'userinfo':userinfo}
         template = jinja_environment.get_template('userinfo.html')
         self.response.write(template.render(vals))
+    def post(self):
+        urlsafe_key = self.request.get('key')
+        key = ndb.Key(urlsafe=urlsafe_key)
+        user = key.get()
+        name = self.request.get('name')
+        personality = self.request.get('personality')
+        music = self.request.get('music')
+        food = self.request.get('food')
+        user.name = name
+        user.personality = personality
+        user.music = music
+        user.food = food
+        user.put()
+        self.redirect(user.url())
 
 def algorithm(driver, user):
     points = 0
@@ -95,7 +109,7 @@ class MainPageHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         query = User.query(User.email==user.email()).get()
         userkey = query.key
-        for trip in Trip.query().fetch():
+        for trip in Trip.query().order(Trip.tripname).fetch():
             if userkey in trip.user_key:
                 trips.append(trip)
         vals = {'trips': trips, 'user':user}
@@ -226,9 +240,15 @@ class EditTripHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('editrip.html')
         self.response.write(template.render(vals))
 
+class EditInfoHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('edituser.html')
+        self.response.write(template.render())
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
+    ('/editinfo', EditInfoHandler)
     ('/newaccount', CreateAccountHandler),
     ('/userinfo', UserInfoHandler),
     ('/mainpage', MainPageHandler),
