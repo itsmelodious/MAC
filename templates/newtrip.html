@@ -4,21 +4,47 @@
     <title>New Trip</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+
+    <style>
+      body {
+        background-color: #97AEF2;
+        color: white;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+      }
+
+      input {
+        margin-top: 5px;
+        height: 15px;
+        width: auto;
+        padding: 5px;
+      }
+    </style>
   </head>
 
   <body>
-    <h1>Create a New Trip</h1>
+    <strong><h1>App Name Here</h1></strong>
+    <h2>Create a New Trip</h2>
+
     <form method="post" action ="/mainpage">
-        <input type="text" name="tripname" placeholder="Name of the trip"/><br>
-        <input type="password" name="trippw" placeholder="Password"/><br>
-        <input type="text" name="destination" placeholder="Destination"/><br>
-        <input type="hidden" name="action" value="create"/>
-        <p>Are you a driver?</p>
-        <input type="radio" name="driver" value="yes">Yes<br>
-        <input type="radio" name="driver" value="no">No<br>
-        <p>If yes, how many seats? (including yourself)</p>
-        <input type="number" name="seats"/><br>
+        <input type="text" name="tripname" placeholder="Name of the trip"><br>
+        <input type="password" name="trippw" placeholder="Password"><br>
+        <input type="text" name="destination" placeholder="Destination"><br>
+        <input type="hidden" name="action" value="create">
+
+        <p>
+          Are you a driver?<br>
+          <label><input type="radio" name="driver" value="yes"> Yes</label><br>
+          <label><input type="radio" name="driver" value="no"> No</label><br>
+        </p>
+        
+        <p>
+          If yes, how many seats? (including yourself)<br>
+          <input type="number" name="seats">
+        </p>
       <input type="submit" value="Submit">
     </form>
+
+    <button><a href="/mainpage">Back</a></button>
   </body>
 </html>

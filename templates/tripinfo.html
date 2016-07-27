@@ -8,12 +8,12 @@
   </head>
 
   <body>
-    <h1>{{trip.tripname}}</h1>
+    <h1 class="tripinfo">{{trip.tripname}}</h1>
     {% for car in cars %}
       <div class="car">
         <!-- Display the driver name -->
-        <div class="names" id="drivername">
-          <h3>{{ car.driver_key.get().name }}</h3>
+        <div class="names">
+          <h3 id="drivername">{{ car.driver_key.get().name }}</h3>
         </div>
         <!-- div for the background car image -->
         <div class="container">
@@ -35,5 +35,6 @@
     <div id="edittrip">
       <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
     </div>
+    <button><a href="/mainpage">Back</a></button>
   </body>
 </html>
