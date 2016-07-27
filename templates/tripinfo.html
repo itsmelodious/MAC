@@ -11,10 +11,13 @@
     <h1>{{trip.tripname}}</h1>
     {% for driver in trip.drivers %}
       <div class="car">
+        <!-- Display the driver name -->
         <div class="names" id="drivername">
-          <h3>{{ driver }}<h3>
+          <h3>{{ driver }}</h3>
         </div>
+        <!-- div for the background car image -->
         <div class="container">
+          <!-- Display the list of passenger names -->
           <div class="names">
             <ul>
               {% for passenger in trip.passengers %}
