@@ -1,3 +1,4 @@
+/* Theme */
 body {
   background-color: #97AEF2;
   color: white;
@@ -11,15 +12,25 @@ ul {
   padding: 0px;
 }
 
-.car {
-  padding: 5px;
-  /*float: left;*/
-  width: 350px;
-  margin: 0px auto;
-  /*background-color: lightblue;
-  border-radius: 20px;*/
+a {
+  text-decoration: none;
+  color: black;
 }
 
+.nav {
+  display: inline;
+}
+/* End of theme */
+
+/* Beginning of tripinfo.html: */
+/* div for each car block */
+.car {
+  padding: 5px;
+  width: 350px;
+  margin: 0px auto;
+}
+
+/* Car image */
 .container {
   margin: 5px;
   min-width: 330px;
@@ -29,46 +40,37 @@ ul {
   background-repeat: no-repeat;
 }
 
+/* Cuts off car image if it overflows */
+div {
+  overflow: hidden;
+}
+
+/* List of passenger names */
 .names {
   padding-top: 10px;
   padding-bottom: 5px;
   padding-left: 25px;
 }
 
+/* Trip name */
 .tripinfo {
   padding-left: 25px;
 }
 
+/* Driver name */
 #drivername {
   margin: 0px;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
-
+/* Edit trip button */
 #edittrip {
   width: 100%;
   display: inline-block;
 }
+/* End of tripinfo.html */
 
+/* Forms */
 input {
   margin-top: 5px;
 }
-
-div.login {
-  margin-bottom: 20px;
-}
-
-button.right {
-  float: right;
-}
-
-/*button.left {
-  float: left;
-}*/
-
-div {
-  overflow: hidden;
-}
+/* End of forms */
