@@ -8,31 +8,48 @@
   </head>
 
   <body>
-    <strong><h1>Pear</h1></strong>
-    <h2 class="tripinfo">{{ trip.tripname }}</h2>
-    {% for car in cars %}
-      <div class="car">
-        <!-- Display the driver name -->
-        <div class="names">
-          <h3 id="drivername">{{ car.driver_key.get().name }}</h3>
-        </div>
-        <!-- div for the background car image -->
-        <div class="container">
-          <!-- Display the list of passenger names -->
+    <header>
+      <div class="appname">
+        <strong><h1>Pear</h1></strong>
+      </div>
+
+      <!-- Navigation Bar -->
+      <div class="nav">
+        <ul>
+          <li><a href="/mainpage">Home</a></li>
+          <li><a href="/newtrip">Create</a></li>
+          <li><a href="/jointrip">Join</a></li>
+          <li><a href="/userinfo">User</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <section class="content">
+      <h2 class="tripinfo">{{ trip.tripname }}</h2>
+      {% for car in cars %}
+        <div class="car">
+          <!-- Display the driver name -->
           <div class="names">
-            <ul>
-              {% for passenger in car.passengers %}
+            <h3 id="drivername">{{ car.driver_key.get().name }}</h3>
+          </div>
+          <!-- div for the background car image -->
+          <div class="container">
+            <!-- Display the list of passenger names -->
+            <div class="names">
+              <ul>
+                {% for passenger in car.passengers %}
                   <li>{{passenger}}</li>
-              {% endfor %}
-            </ul>
+                {% endfor %}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
 
-    <div id="edittrip">
-      <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
-    </div>
-    <button><a href="/mainpage">Back</a></button>
+      <div id="edittrip">
+        <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
+      </div>
+    </section>
   </body>
 </html>

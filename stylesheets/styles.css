@@ -1,8 +1,10 @@
+/* Theme */
 body {
   background-color: #97AEF2;
   color: white;
   text-align: center;
   font-family: 'Roboto', sans-serif;
+  margin: 0px;
 }
 
 ul {
@@ -11,15 +13,78 @@ ul {
   padding: 0px;
 }
 
-.car {
-  padding: 5px;
-  /*float: left;*/
-  width: 350px;
-  margin: 0px auto;
-  /*background-color: lightblue;
-  border-radius: 20px;*/
+a {
+  text-decoration: none;
+  color: black;
 }
 
+/* App name */
+.appname {
+  background-color: lightblue;
+}
+
+/* Navigation bar */
+.nav {
+  background-color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.nav ul{
+  overflow: hidden;
+}
+
+.nav li {
+  float: left;
+  width: 25%;
+}
+
+.nav li a {
+  display: block;
+  padding: 10px;
+  color: black;
+}
+
+.nav li a:hover {
+  color: white;
+  background-color: grey;
+}
+
+.nav li a:active {
+  color: black;
+  background-color: lightgrey;
+}
+
+/* current page */
+li.active {
+  color: white;
+  background-color: #97AEF2;
+}
+/* End of navigation bar */
+
+/* Content */
+.content {
+  background-color: lightblue;
+  min-width: 365px;
+  width: auto;
+  margin: 20px 25%;
+  padding-bottom: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+/* End of content */
+/* End of theme */
+
+
+/* Beginning of tripinfo.html: */
+/* div for each car block */
+.car {
+  padding: 5px;
+  width: 350px;
+  margin: 0px auto;
+}
+
+/* Car image */
 .container {
   margin: 5px;
   min-width: 330px;
@@ -29,46 +94,38 @@ ul {
   background-repeat: no-repeat;
 }
 
+/* Cuts off car image if it overflows */
+div {
+  overflow: hidden;
+}
+
+/* List of passenger names */
 .names {
   padding-top: 10px;
   padding-bottom: 5px;
   padding-left: 25px;
 }
 
+/* Trip name */
 .tripinfo {
   padding-left: 25px;
 }
 
+/* Driver name */
 #drivername {
   margin: 0px;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
-
+/* Edit trip button */
 #edittrip {
   width: 100%;
   display: inline-block;
 }
+/* End of tripinfo.html */
 
+
+/* Forms */
 input {
   margin-top: 5px;
 }
-
-div.login {
-  margin-bottom: 20px;
-}
-
-button.right {
-  float: right;
-}
-
-/*button.left {
-  float: left;
-}*/
-
-div {
-  overflow: hidden;
-}
+/* End of forms */
