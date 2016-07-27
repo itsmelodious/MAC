@@ -4,72 +4,33 @@
     <meta charset="utf-8">
     <title>Trip Info</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
-
-    <style>
-      .car {
-        margin: 5px;
-        position: fixed;
-        z-index: 1;
-      }
-    </style>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   </head>
 
   <body>
-    {{trip.tripname}}
-    <!-- {% for drivers in trip.drivers %}
-      <img src="/images/car.png" width=300px>
-    {% endfor %} -->
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
-      <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
+    <h1>{{trip.tripname}}</h1>
+    {% for driver in trip.drivers %}
+      <div class="car">
+        <!-- Display the driver name -->
+        <div class="names" id="drivername">
+          <h3>{{ driver }}</h3>
+        </div>
+        <!-- div for the background car image -->
+        <div class="container">
+          <!-- Display the list of passenger names -->
+          <div class="names">
+            <ul>
+              {% for passenger in trip.passengers %}
+              <li>{{ passenger }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+    {% endfor %}
 
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
-      <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
-      </div>
+    <div id="edittrip">
+      <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
     </div>
-
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
-      <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
-      </div>
-    </div>
-
-    <div>
-      <h3>Driver Name<h3>
-      <img class="car" src="car.png" width=46.5%>
-      <div class="names">
-        <ul>
-          <li>Name 1</li>
-          <li>Name 2</li>
-          <li>Name 3</li>
-          <li>Name 4</li>
-        </ul>
-      </div>
-    </div>
-    <a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a>
   </body>
 </html>
