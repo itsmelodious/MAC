@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<style>
-  background {
-    color; red:
+ <style>
+  .button {
+    padding: 8px 16px;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: none;
   }
+
+  body {
+    background: url(images/travelling4.jpg);
+    background-size: 1000px;
+    /*display: flex;
+    align-items: center;
+    justify-content: center;*/
+    height: 100%;
+    width: 100%;
+  }
+
 </style>
 
 <html>
@@ -10,12 +24,18 @@
     <title>Log Into Pear</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <img src="images/pearlogo.png"/>
   </head>
 
   <body>
-    <strong><h1>Pear</h1></strong>
-    <!-- Sign in link -->
-    INSERT BIG IMAGE AND INFO HERE
-    <button><a href="/newaccount">Sign Up</a></button>
+    <div id="content">
+      <strong><h1>Pear</h1></strong>
+      <!-- Sign in link -->
+      Pairing friends' preferances to optimize your commute since 2016.
+      <br><br>
+      <button><a href="/" class="button">Sign In</a></button>
+      <br><br>
+      <button><a href="/newaccount" class="button">Create Account</a></button>
+    </div>
   </body>
 </html>
