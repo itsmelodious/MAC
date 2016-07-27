@@ -16,7 +16,6 @@ class User(ndb.Model):
     music = ndb.StringProperty()
     food = ndb.StringProperty()
     personality = ndb.StringProperty()
-    genInfo = ndb.StringProperty()
     email = ndb.StringProperty()
     username = ndb.StringProperty()
     # When we want to access user trips, query the trip with the user_key and list trips
@@ -72,11 +71,10 @@ class CreateAccountHandler(webapp2.RequestHandler):
 class UserInfoHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        # userinfo = User.query(User.email==user.email()).fetch()
-        # userinfo = User.query().fetch() #should change to .get(userkey) so it only displays the info for the specific user
+        userinfo = User.query(User.email==user.email()).get()
         # This creates the sign out link.
         logout_url = users.create_logout_url('/')
-        vals = {'logout_url': logout_url, 'user':user}
+        vals = {'logout_url': logout_url, 'userinfo':userinfo}
         template = jinja_environment.get_template('userinfo.html')
         self.response.write(template.render(vals))
 
@@ -106,18 +104,12 @@ class MainPageHandler(webapp2.RequestHandler):
         action = self.request.get('action')
 
         if action == 'create':
-            if drivers == "yes":
-                # Create a new trip
-                seats = int(self.request.get('seats'))
-                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], drivers = [query.name])
-                newtrip.put()
-                newcar = Car(trip_key=newtrip.key, seats=seats, driver_key= userkey)
-                newcar.put()
+            seats = int(self.request.get('seats'))
+            newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], drivers = [query.name])
+            newtrip.put()
+            newcar = Car(trip_key=newtrip.key, seats=seats, driver_key= userkey)
+            newcar.put()
 
-            else:
-                # Create a new trip
-                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], passengers = [query.name])
-                newtrip.put()
         else:
             # Loop through the list of trips.
             foundtrip = None
@@ -135,9 +127,15 @@ class MainPageHandler(webapp2.RequestHandler):
                     trip.put()
                 else:
                     trip = Trip.query(Trip.tripname==tripname).get()
+                    tripkey = trip.key
+                    cars = Car.query(Car.trip_key==tripkey).fetch()
                     trip.passengers.append(query.name)
+                    car = random.choice(cars)
+                    if len(car.passengers)<(car.seats-1):
+                        car.passengers.append(query.name)
                     trip.user_key.append(userkey)
                     trip.put()
+                    car.put()
             else:
                 self.response.write('Error')
                 return
@@ -155,9 +153,6 @@ class TripInfoHandler(webapp2.RequestHandler):
         key = ndb.Key(urlsafe=urlsafe_key)
         trip = key.get()
         cars = Car.query(Car.trip_key==key).fetch()
-        for passenger in trip.passengers:
-            car = random.choice(cars)
-            car.passengers.append(passenger)
         vals = {'trip': trip, 'cars': cars}
         template = jinja_environment.get_template('tripinfo.html')
         self.response.write(template.render(vals))
@@ -177,11 +172,6 @@ class JoinTripHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('jointrip.html')
         self.response.write(template.render())
 
-    def post(self):
-        tripname = self.request.get('tripname')
-        trippw = self.request.get('trippw')
-        self.redirect('/jointrip') # why is it redirecting to jointrip? Shouldn't it go to tripinfo or mainpage?
-
 class CreateAccountHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('newacc.html')
@@ -190,7 +180,6 @@ class CreateAccountHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         name = self.request.get('name')
         username = self.request.get('username')
-        genInfo = self.request.get('genInfo')
         personality = self.request.get('personality')
         music = self.request.get('music')
         food = self.request.get('food')
