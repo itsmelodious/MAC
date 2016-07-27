@@ -1,17 +1,8 @@
 <!DOCTYPE html>
-<style>
-.button {
-  padding: 8px 16px;
-  display: inline-block;
-  text-decoration: none;
-  border-radius: none;
-}
-</style>
-
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Create An Account</title>
+    <title>Edit User Info</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   </head>
@@ -25,20 +16,19 @@
       <!-- Navigation Bar -->
       <div class="nav">
         <ul>
-          <li><a href="#mainpage">Home</a></li>
-          <li><a href="#newtrip">Create</a></li>
-          <li><a href="#jointrip">Join</a></li>
-          <li><a href="#userinfo">User</a></li>
+          <li><a href="/mainpage">Home</a></li>
+          <li><a href="/newtrip">Create</a></li>
+          <li><a href="/jointrip">Join</a></li>
+          <li class="active"><a href="/userinfo">User</a></li>
         </ul>
       </div>
     </header>
 
     <!-- Content -->
     <section class="content">
-      <h2>Create an Account</h2>
-
-      <form action="/newaccount" method="post">
-        <h4><input name="name" placeholder="Name"></h4>
+      <h2>Edit User Info</h2>
+      <form action="/userinfo" method="post">
+        <h4><input name="name" placeholder="Name" value="{{ userinfo.name }}"></h4>
         <hr>
 
         <!-- list of questions music, food, personality -->
@@ -61,10 +51,8 @@
           <label><input type="radio" name="food" value="3">I'm a vegan</label><br>
           <label><input type="radio" name="food" value="4">Any</label><br>
         <br><br>
-        <input type = "submit" value ="Create An Account">
+        <input type = "submit" value ="Update User Info">
       </form>
-
-      <button><a href="/">Back</a></button>
     </section>
   </body>
 </html>

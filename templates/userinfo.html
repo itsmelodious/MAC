@@ -19,17 +19,53 @@
           <li><a href="/mainpage">Home</a></li>
           <li><a href="/newtrip">Create</a></li>
           <li><a href="/jointrip">Join</a></li>
-          <li><a href="/userinfo">User</a></li>
+          <li class="active"><a href="/userinfo">User</a></li>
         </ul>
       </div>
     </header>
 
     <!-- Content -->
     <section class="content">
-      <p>
-        {{user}}
-        <a href="{{ logout_url }}">Sign out</a>
-      </p>
+      <div style="padding: 10px">
+        <img src="/images/user.png" height="70px">
+        <h2 style="margin: 0px">{{ userinfo.name }}<br></h2>
+        <p>{{ userinfo.email }}</p>
+
+        <h3>Preferences</h3>
+        <p>
+          {% if userinfo.personality == "1" %}
+            Introvert<br>
+          {% elif userinfo.personality == "2" %}
+            Extrovert<br>
+          {% elif userinfo.personality == "3" %}
+            Ambivert<br>
+          {% elif userinfo.personality == "4" %}
+            Any<br>
+          {% endif %}
+
+          {% if userinfo.music == "1" %}
+            Pop<br>
+          {% elif userinfo.music == "2" %}
+            EDM<br>
+          {% elif userinfo.music == "3" %}
+            Rap<br>
+          {% elif userinfo.music == "4" %}
+            Any<br>
+          {% endif %}
+
+          {% if userinfo.food == "1" %}
+            Korean BBQ<br>
+          {% elif userinfo.food == "2" %}
+            American BBQ<br>
+          {% elif userinfo.food == "3" %}
+            I'm a vegan<br>
+          {% elif userinfo.food == "4" %}
+            Any<br>
+          {% endif %}
+        </p>
+      </div>
+      <button><a href="/edituser">Edit Infomation</a></button><br>
+      <button><a href="{{ logout_url }}">Sign out</a></button>
     </section>
   </body>
 </html>

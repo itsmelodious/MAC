@@ -26,21 +26,17 @@
     <!-- Content -->
     <section class="content">
       <h2>Create a New Trip</h2>
+      <p>To create a trip, you must be a driver.</p>
 
       <form method="post" action ="/mainpage">
-          <input type="text" name="tripname" placeholder="Name of the trip"><br>
-          <input type="password" name="trippw" placeholder="Trip Password"><br>
-          <input type="text" name="destination" placeholder="Destination"><br>
-          <input type="hidden" name="action" value="create">
-
           <p>
-            Are you a driver?<br>
-            <label><input type="radio" name="driver" value="yes"> Yes</label><br>
-            <label><input type="radio" name="driver" value="no"> No</label><br>
+            <input type="text" name="tripname" placeholder="Name of the trip"><br>
+            <input type="password" name="trippw" placeholder="Trip Password"><br>
+            <input type="text" name="destination" placeholder="Destination"><br>
+            <input type="hidden" name="action" value="create">
           </p>
-
           <p>
-            If yes, how many seats? (including yourself)<br>
+            How many seats are in your car? (including yourself)<br>
             <input type="number" name="seats" placeholder="Enter a number">
           </p>
         <input type="submit" value="Submit">
