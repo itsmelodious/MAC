@@ -15,7 +15,9 @@ class User(ndb.Model):
     music = ndb.StringProperty()
     food = ndb.StringProperty()
     personality = ndb.StringProperty()
+    genInfo = ndb.StringProperty()
     email = ndb.StringProperty()
+    username = ndb.StringProperty()
     # When we want to access user trips, query the trip with the user_key and list trips
 
     def url(self):
@@ -45,9 +47,10 @@ class MainHandler(webapp2.RequestHandler):
         # If the user is logged in, then redirect to the main page.
         if user:
             if not User.query(User.email==user.email()).fetch():
-                newuser = User(email=user.email())
-                newuser.put()
-            self.redirect('/mainpage')
+                self.redirect('/newaccount')
+
+            else:
+                self.redirect('/mainpage')
         # This creates the sign in link.
         login_url = users.create_login_url('/')
         template = jinja_environment.get_template('login.html')
@@ -99,14 +102,14 @@ class MainPageHandler(webapp2.RequestHandler):
             if drivers == "yes":
                 # Create a new trip
                 seats = int(self.request.get('seats'))
-                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], drivers = [user.email()])
+                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], drivers = [query.name])
                 newtrip.put()
                 newcar = Car(trip_key=newtrip.key, seats=seats, driver_key= userkey)
                 newcar.put()
 
             else:
                 # Create a new trip
-                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], passengers = [user.email()])
+                newtrip = Trip(tripname=tripname, trippassword=trippw, destination=destination, user_key= [userkey], passengers = [query.name])
                 newtrip.put()
         else:
             # Loop through the list of trips.
@@ -118,14 +121,14 @@ class MainPageHandler(webapp2.RequestHandler):
                 if drivers == "yes":
                     seats = int(self.request.get('seats'))
                     trip = Trip.query(Trip.tripname==tripname).get()
-                    trip.drivers.append(user.email())
+                    trip.drivers.append(query.name)
                     trip.user_key.append(userkey)
                     newcar = Car(trip_key=trip.key, seats=seats, driver_key=userkey)
                     newcar.put()
                     trip.put()
                 else:
                     trip = Trip.query(Trip.tripname==tripname).get()
-                    trip.passengers.append(user.email())
+                    trip.passengers.append(query.name)
                     trip.user_key.append(userkey)
                     trip.put()
             else:
@@ -164,6 +167,17 @@ class CreateAccountHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('newacc.html')
         self.response.write(template.render())
+    def post(self):
+        user = users.get_current_user()
+        name = self.request.get('name')
+        username = self.request.get('username')
+        genInfo = self.request.get('genInfo')
+        personality = self.request.get('personality')
+        music = self.request.get('music')
+        food = self.request.get('food')
+        newuser = User(email=user.email(), name=name, username=username, genInfo=genInfo, personality=personality, music=music, food=food)
+        newuser.put()
+        self.redirect('/mainpage')
 
 class EditTripHandler(webapp2.RequestHandler):
     def get(self):
