@@ -36,6 +36,7 @@ class Trip(ndb.Model):
         url = '/tripinfo?key=' + self.key.urlsafe()
         return url
 
+
 class Car(ndb.Model):
     trip_key = ndb.KeyProperty(kind=Trip)
     seats = ndb.IntegerProperty()
@@ -147,11 +148,22 @@ class TripInfoHandler(webapp2.RequestHandler):
         urlsafe_key = self.request.get('key')
         key = ndb.Key(urlsafe=urlsafe_key)
         trip = key.get()
+        # for driver in trip.drivers:
+        #
+        #     passengers = random.choice(trip.passengers)
         vals = {'trip': trip}
         template = jinja_environment.get_template('tripinfo.html')
         self.response.write(template.render(vals))
-
-        # user = users.get_current_user()
+    def post(self):
+        urlsafe_key = self.request.get('key')
+        key = ndb.Key(urlsafe=urlsafe_key)
+        trip = key.get()
+        tripname = self.request.get('tripname')
+        trippw = self.request.get('trippw')
+        trip.tripname = tripname
+        trip.trippassword = trippw
+        trip.put()
+        self.redirect(trip.url())
 
 class JoinTripHandler(webapp2.RequestHandler):
     def get(self):
@@ -181,8 +193,13 @@ class CreateAccountHandler(webapp2.RequestHandler):
 
 class EditTripHandler(webapp2.RequestHandler):
     def get(self):
+        urlsafe_key = self.request.get('key')
+        key = ndb.Key(urlsafe=urlsafe_key)
+        trip = key.get()
+        vals = {'trip':trip}
         template = jinja_environment.get_template('editrip.html')
-        self.response.write(template.render())
+        self.response.write(template.render(vals))
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
