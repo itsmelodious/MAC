@@ -9,19 +9,22 @@
 
   <body>
     <h1>{{trip.tripname}}</h1>
-    {% for driver in trip.drivers %}
+    {% for car in cars %}
       <div class="car">
         <!-- Display the driver name -->
         <div class="names" id="drivername">
-          <h3>{{ driver }}</h3>
+          <h3>{{ car.driver_key.get().name }}</h3>
         </div>
         <!-- div for the background car image -->
         <div class="container">
           <!-- Display the list of passenger names -->
           <div class="names">
             <ul>
-              {% for passenger in trip.passengers %}
-              <li>{{ passenger }}</li>
+              {% for seat in range(car.seats) %}
+                    {% if randompasseng!= [] %}
+                      <li>{{randompasseng.pop()}}</li>
+                    {% else: %}
+                      {% endif %}
               {% endfor %}
             </ul>
           </div>

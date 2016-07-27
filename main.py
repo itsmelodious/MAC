@@ -2,6 +2,7 @@ import webapp2
 import jinja2
 import os
 import random
+from random import shuffle
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
@@ -48,15 +49,19 @@ class MainHandler(webapp2.RequestHandler):
         # If the user is logged in, then redirect to the main page.
         if user:
             if not User.query(User.email==user.email()).fetch():
-                self.redirect('/newaccount')
-
+                self.redirect('/home')
             else:
                 self.redirect('/mainpage')
         # This creates the sign in link.
         login_url = users.create_login_url('/')
-        template = jinja_environment.get_template('login.html')
+        template = jinja_environment.get_template('home.html')
         vals = {'login_url': login_url}
         self.response.write(template.render(vals))
+
+class HomeHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('home.html')
+        self.response.write(template.render())
 
 class CreateAccountHandler(webapp2.RequestHandler):
     def get(self):
@@ -148,10 +153,17 @@ class TripInfoHandler(webapp2.RequestHandler):
         urlsafe_key = self.request.get('key')
         key = ndb.Key(urlsafe=urlsafe_key)
         trip = key.get()
-        # for driver in trip.drivers:
-        #
-        #     passengers = random.choice(trip.passengers)
-        vals = {'trip': trip}
+        cars = Car.query(Car.trip_key==key).fetch()
+        passengers_copy = trip.passengers
+        randompasseng = []
+        # randompasseng = shuffle(passengers_copy)
+        for passenger in passengers_copy:
+            x = random.choice(passengers_copy)
+            if x not in randompasseng:
+                randompasseng.append(x)
+            else:
+                break
+        vals = {'trip': trip, 'cars': cars, 'randompasseng': randompasseng}
         template = jinja_environment.get_template('tripinfo.html')
         self.response.write(template.render(vals))
     def post(self):
@@ -203,6 +215,7 @@ class EditTripHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/home', HomeHandler),
     ('/newaccount', CreateAccountHandler),
     ('/userinfo', UserInfoHandler),
     ('/mainpage', MainPageHandler),
