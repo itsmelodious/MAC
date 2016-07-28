@@ -92,9 +92,7 @@ li.active, li.active a {
 }
 
 /* Cuts off car image if it overflows */
-div {
-  overflow: hidden;
-}
+
 
 /* List of passenger names */
 .names {
