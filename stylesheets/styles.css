@@ -99,7 +99,7 @@ button {
 
 /* Home page */
 body.home {
-  background: url(images/travelling4.jpg);
+  background: url(/images/travelling4.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
