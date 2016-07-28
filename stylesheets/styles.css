@@ -1,6 +1,6 @@
 /* Theme */
 body {
-  background-color: #97AEF2;
+  background-color: white;
   color: white;
   text-align: center;
   font-family: 'Roboto', sans-serif;
@@ -20,12 +20,13 @@ a {
 
 /* App name */
 .appname {
-  background-color: lightblue;
+  background-color: #193366;
+  color: white;
 }
 
 /* Navigation bar */
 .nav {
-  background-color: white;
+  background-color: #24478f;
   text-align: center;
   width: 100%;
 }
@@ -42,7 +43,7 @@ a {
 .nav li a {
   display: block;
   padding: 10px;
-  color: black;
+  color: white;
 }
 
 .nav li a:hover {
@@ -64,7 +65,7 @@ li.active {
 
 /* Content */
 .content {
-  background-color: lightblue;
+  background-color: #85a3e0;
   min-width: 365px;
   width: auto;
   margin: 40px 25%;
