@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- <meta charset="utf-8"> -->
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>Trip Info</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
@@ -57,14 +56,19 @@
         <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
       </div>
     </section>
-    </div>
 
+    <!-- Post comments -->
     <form method="post" action="{{ trip.url() }}">
-      Enter a comment: <textarea name="text" placeholder="Comment goes here"></textarea>
+      <p>
+        Enter a comment:<br>
+        <textarea name="text" placeholder="Comment goes here"></textarea>
+      </p>
       <br>
       <input type="hidden" name="action" value="comment">
-      <p><input type="submit" value="Submit"></p>
+      <button type="submit" value="Submit">Post Comment</button>
     </form>
+
+    <!-- List comments -->
     {% for comment in comments %}
       <article>
         <h3>

@@ -1,6 +1,5 @@
 /* Theme */
 body {
-  /*background-color: white;*/
   background-image: url(/images/googlemaps.png);
   color: black;
   text-align: center;
@@ -19,12 +18,10 @@ a {
   color: black;
 }
 
-
 /* Header */
 header {
   opacity: 0.9;
 }
-
 
 /* App name */
 .appname {
@@ -96,17 +93,6 @@ button {
   text-decoration: none;
   border-radius: none;
   border: solid 1px #EBEBEB; /* gmaps gray */
-}
-
-input[type=submit] {
-  background-color: #9FCBFF; /* gmaps blue */
-  padding: 8px 16px;
-  margin: 0px;
-  display: inline-block;
-  text-decoration: none;
-  border-radius: none;
-  border: solid 1px #EBEBEB; /* gmaps gray */
-  cursor: pointer;
 }
 /* End of theme */
 
