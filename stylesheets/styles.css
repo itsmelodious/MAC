@@ -92,11 +92,18 @@ button {
   text-decoration: none;
   border-radius: none;
   border: solid 1px #EBEBEB; /* gmaps gray */
+  font-family: 'Comfortaa', cursive;
 }
 /* End of theme */
 
 
 /* Home page */
+#appnamehome {
+  font-family: 'Bungee Hairline', cursive;
+  font-size: 80px;
+  margin: 10px 0px;
+}
+
 body.home {
   background: url(/images/travelling4.jpg);
   background-size: cover;
