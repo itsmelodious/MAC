@@ -1,7 +1,8 @@
 /* Theme */
 body {
-  background-color: white;
-  color: white;
+  /*background-color: white;*/
+  background-image: url(/images/googlemaps.png);
+  color: black;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   margin: 0px;
@@ -20,13 +21,13 @@ a {
 
 /* App name */
 .appname {
-  background-color: #193366;
-  color: white;
+  background-color: #D0EFB8; /* gmaps green */
+  color: black;
 }
 
 /* Navigation bar */
 .nav {
-  background-color: #24478f;
+  background-color: #9FCBFF; /* gmaps blue */
   text-align: center;
   width: 100%;
 }
@@ -43,29 +44,24 @@ a {
 .nav li a {
   display: block;
   padding: 10px;
-  color: white;
+  color: black;
 }
 
 .nav li a:hover {
   color: white;
-  background-color: grey;
-}
-
-.nav li a:active {
-  color: black;
-  background-color: lightgrey;
+  background-color: #FED999; /* gmaps orange */
 }
 
 /* current page */
-li.active {
-  color: white;
-  background-color: #97AEF2;
+li.active, li.active a {
+  color: black;
+  background-color: #EBEBEB; /* gmaps gray */
 }
 /* End of navigation bar */
 
 /* Content */
 .content {
-  background-color: #85a3e0;
+  background-color: #FFF5B6; /* gmaps yellow */
   min-width: 365px;
   width: auto;
   margin: 40px 25%;
@@ -105,6 +101,11 @@ div {
   padding-top: 10px;
   padding-bottom: 5px;
   padding-left: 25px;
+  color: white;
+}
+
+.names li {
+  color: white;
 }
 
 /* Trip name */
@@ -115,6 +116,7 @@ div {
 /* Driver name */
 #drivername {
   margin: 0px;
+  color: #A18261; /* gmaps brown */
 }
 
 /* Edit trip button */
@@ -123,6 +125,23 @@ div {
   display: inline-block;
 }
 /* End of tripinfo.html */
+
+
+/* Begining of editrip.html */
+.table {
+  text-align: center;
+  margin: 0 25%;
+}
+/* End of edittrip.html */
+
+
+/* Beginning of mainpage.html */
+.triplink a:hover {
+  color: #A18261;
+  letter-spacing: 3px;
+	transition: 0.25s;
+}
+/* End of mainpage.html */
 
 
 /* Forms */

@@ -29,27 +29,32 @@
       <!-- Enables creator to edit trip name and trip password -->
       <form action="{{ trip.url() }}" method="post">
         <h2>Edit Trip</h2>
-        <h3>Trip Name</h3>
-        <input type="text" name ="tripname" value={{trip.tripname}} >
-        <h3>Trip Password</h3>
-        <input type="text" name ="trippw" value={{trip.trippassword}}>
+        <h3>
+          Trip Name:
+          <input type="text" name ="tripname" value={{trip.tripname}}>
+        </h3>
+        <h3>
+          Trip Password:
+          <input type="text" name ="trippw" value={{trip.trippassword}}>
+        </h3>
         <input type="submit" value="Submit">
       </form>
 
       <!-- Shows a table of current people participating in the road trip -->
       <h2>List of People</h2>
       <form class="Student" method="post" action="">
-        <body>
+        <div class="table">
           <table>
             <tr>
-              <th>Name</th>
-              <th>Delete</th>
+              <th>Name</th> <!-- Need to change this so it uses {{ userinfo.name }} -->
+              <th>Delete</th> <!-- Need to change this to a button?? also with userkey -->
             </tr>
-            <tr>
+            <tr> <!-- What is this??? -->
               <td>
               </td>
             </tr>
           </table>
+        </div>
       </form>
 
       <!-- Enables creator to add or remove someone from the list -->

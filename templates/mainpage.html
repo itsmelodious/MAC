@@ -34,7 +34,7 @@
           <div id="yourTrips">
           <h2>Trips</h2>
           {% for trip in trips %}
-            <li><a href="{{ trip.url() }}">{{ trip.tripname }}</a></li>
+            <li class="triplink"><a href="{{ trip.url() }}">{{ trip.tripname }}</a></li>
           {% endfor %}
           </div>
         </ul>
