@@ -42,8 +42,8 @@
             <!-- Display the list of passenger names -->
             <div class="names">
               <ul>
-                {% for passenger in car.passengers %}
-                  <li>{{passenger}}</li>
+                {% for passenger in car.passengers_key %}
+                  <li>{{passenger.get().name}}</li>
                 {% endfor %}
               </ul>
             </div>

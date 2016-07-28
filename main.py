@@ -41,7 +41,7 @@ class Car(ndb.Model):
     trip_key = ndb.KeyProperty(kind=Trip)
     seats = ndb.IntegerProperty()
     driver_key = ndb.KeyProperty(kind=User)
-    passengers = ndb.StringProperty(repeated=True)
+    passengers_key = ndb.KeyProperty(kind=User, repeated=True)
 
 class Comment(ndb.Model):
     text = ndb.StringProperty()
@@ -88,6 +88,7 @@ class UserInfoHandler(webapp2.RequestHandler):
         urlsafe_key = self.request.get('key')
         key = ndb.Key(urlsafe=urlsafe_key)
         user = key.get()
+        cars = Car.query().fetch()
         name = self.request.get('name')
         personality = self.request.get('personality')
         music = self.request.get('music')
@@ -147,6 +148,7 @@ class MainPageHandler(webapp2.RequestHandler):
             for trip in Trip.query().fetch():
                 if trip.tripname == tripname and trip.trippassword == trippw:
                     foundtrip = 'yes'
+                    break
                 elif trip.tripname == tripname:
                     foundtrip = 'wrongpass'
                 else:
@@ -169,7 +171,7 @@ class MainPageHandler(webapp2.RequestHandler):
                     winningcar = None
                     logging.info('user:' + query.name)
                     for car in cars:
-                        if not len(car.passengers)<(car.seats-1):
+                        if not len(car.passengers_key)<(car.seats-1):
                             continue
                         points=algorithm(car.driver_key.get(), query)
                         if points >= winningpoints:
@@ -177,7 +179,7 @@ class MainPageHandler(webapp2.RequestHandler):
                             winningcar = car
                     logging.info('winningcar:' + winningcar.driver_key.get().name)
                     if winningcar:
-                        winningcar.passengers.append(query.name)
+                        winningcar.passengers_key.append(query.key)
                     else:
                         self.response.write('No space left in the cars!')
                         return
