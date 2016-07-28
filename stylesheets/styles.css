@@ -19,6 +19,13 @@ a {
   color: black;
 }
 
+
+/* Header */
+header {
+  opacity: 0.9;
+}
+
+
 /* App name */
 .appname {
   background-color: #D0EFB8; /* gmaps green */
@@ -77,9 +84,43 @@ li.active, li.active a {
   padding-bottom: 10px;
   border-radius: 20px;
   overflow: hidden;
+  opacity: 0.9;
 }
 /* End of content */
+
+button {
+  background-color: #9FCBFF; /* gmaps blue */
+  padding: 8px 16px;
+  margin-top: 5px;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: none;
+  border: solid 1px #EBEBEB; /* gmaps gray */
+}
+
+input[type=submit] {
+  background-color: #9FCBFF; /* gmaps blue */
+  padding: 8px 16px;
+  margin: 0px;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: none;
+  border: solid 1px #EBEBEB; /* gmaps gray */
+  cursor: pointer;
+}
 /* End of theme */
+
+
+/* Home page */
+body.home {
+  background: url(images/travelling4.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  color: white;
+}
+/* End of home page */
 
 
 /* Beginning of tripinfo.html: */
@@ -101,7 +142,7 @@ li.active, li.active a {
 }
 
 /* Cuts off car image if it overflows */
-div {
+div.car {
   overflow: hidden;
 }
 
