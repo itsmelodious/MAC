@@ -19,6 +19,7 @@ class User(ndb.Model):
     personality = ndb.StringProperty()
     email = ndb.StringProperty()
     username = ndb.StringProperty()
+    activity = ndb.StringProperty()
     # When we want to access user trips, query the trip with the user_key and list trips
 
     def url(self):
@@ -93,15 +94,19 @@ class UserInfoHandler(webapp2.RequestHandler):
         personality = self.request.get('personality')
         music = self.request.get('music')
         food = self.request.get('food')
+        activity = self.request.get('activity')
         user.name = name
         user.personality = personality
         user.music = music
         user.food = food
+        user.activity = activity
         user.put()
         self.redirect(user.url())
 
 def algorithm(driver, user):
     points = 0
+    if driver.activity == user.activity:
+        points += 5
     if driver.music == user.music:
         points += 5
     if driver.personality == user.personality:
@@ -244,7 +249,8 @@ class CreateAccountHandler(webapp2.RequestHandler):
         personality = self.request.get('personality')
         music = self.request.get('music')
         food = self.request.get('food')
-        newuser = User(email=user.email(), name=name, personality=personality, music=music, food=food)
+        activity = self.request.get('activity')
+        newuser = User(email=user.email(), name=name, personality=personality, music=music, food=food, activity=activity)
         newuser.put()
         self.redirect('/mainpage')
 
