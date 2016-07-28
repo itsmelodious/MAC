@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <!-- <meta charset="utf-8"> -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>Trip Info</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0VhvAXQGPpZ7i8XOc0CznTZoFGOmIHvg">
+    </script>
   </head>
 
   <body>
@@ -51,5 +55,32 @@
         <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
       </div>
     </section>
+    <div id="map" style="width: 400px; height: 300px;"></div>
+
+    <script type="text/javascript">
+
+    var address = 'London, UK';
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        zoom: 6
+    });
+
+    var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({
+       'address': address
+    },
+    function(results, status) {
+       if(status == google.maps.GeocoderStatus.OK) {
+          new google.maps.Marker({
+             position: results[0].geometry.location,
+             map: map
+          });
+          map.setCenter(results[0].geometry.location);
+       }
+    });
+
+    </script>
   </body>
 </html>

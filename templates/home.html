@@ -32,8 +32,10 @@
       <!-- Sign in link -->
       Pairing friends' preferances to optimize your commute since 2016.
       <br><br>
-      <button><a href="/" class="button">Sign In</a></button>
+      {% if not isloggedin: %}
+        <button><a href="{{login_url}}" class="button">Sign In</a></button>
       <br><br>
+      {% endif %}
       <button><a href="/newaccount" class="button">Create Account</a></button>
     </div>
   </body>

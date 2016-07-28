@@ -53,16 +53,17 @@ class MainHandler(webapp2.RequestHandler):
                 self.redirect('/home')
             else:
                 self.redirect('/mainpage')
-        # This creates the sign in link.
-        login_url = users.create_login_url('/')
-        template = jinja_environment.get_template('home.html')
-        vals = {'login_url': login_url}
-        self.response.write(template.render(vals))
+        else:
+            self.redirect('/home')
 
 class HomeHandler(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        # This creates the sign in link.
+        login_url = users.create_login_url('/')
         template = jinja_environment.get_template('home.html')
-        self.response.write(template.render())
+        vals = {'login_url': login_url, 'isloggedin': user}
+        self.response.write(template.render(vals))
 
 class CreateAccountHandler(webapp2.RequestHandler):
     def get(self):
