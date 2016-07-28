@@ -41,8 +41,13 @@ class Car(ndb.Model):
     trip_key = ndb.KeyProperty(kind=Trip)
     seats = ndb.IntegerProperty()
     driver_key = ndb.KeyProperty(kind=User)
-    passengers = ndb.StringProperty(repeated=True)
+    passengers_key = ndb.KeyProperty(kind=User, repeated=True)
 
+class Comment(ndb.Model):
+    text = ndb.StringProperty()
+    user_key = ndb.KeyProperty(kind=User)
+    date = ndb.DateTimeProperty(auto_now_add=True)
+    trip_key = ndb.KeyProperty(kind=Trip)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -83,6 +88,7 @@ class UserInfoHandler(webapp2.RequestHandler):
         urlsafe_key = self.request.get('key')
         key = ndb.Key(urlsafe=urlsafe_key)
         user = key.get()
+        cars = Car.query().fetch()
         name = self.request.get('name')
         personality = self.request.get('personality')
         music = self.request.get('music')
@@ -142,6 +148,7 @@ class MainPageHandler(webapp2.RequestHandler):
             for trip in Trip.query().fetch():
                 if trip.tripname == tripname and trip.trippassword == trippw:
                     foundtrip = 'yes'
+                    break
                 elif trip.tripname == tripname:
                     foundtrip = 'wrongpass'
                 else:
@@ -164,7 +171,7 @@ class MainPageHandler(webapp2.RequestHandler):
                     winningcar = None
                     logging.info('user:' + query.name)
                     for car in cars:
-                        if not len(car.passengers)<(car.seats-1):
+                        if not len(car.passengers_key)<(car.seats-1):
                             continue
                         points=algorithm(car.driver_key.get(), query)
                         if points >= winningpoints:
@@ -172,7 +179,7 @@ class MainPageHandler(webapp2.RequestHandler):
                             winningcar = car
                     logging.info('winningcar:' + winningcar.driver_key.get().name)
                     if winningcar:
-                        winningcar.passengers.append(query.name)
+                        winningcar.passengers_key.append(query.key)
                     else:
                         self.response.write('No space left in the cars!')
                         return
@@ -198,18 +205,28 @@ class TripInfoHandler(webapp2.RequestHandler):
         key = ndb.Key(urlsafe=urlsafe_key)
         trip = key.get()
         cars = Car.query(Car.trip_key==key).fetch()
-        vals = {'trip': trip, 'cars': cars}
+        comments = Comment.query(Comment.trip_key == key).order(-Comment.date).fetch()
+        vals = {'trip': trip, 'cars': cars, 'comments': comments}
         template = jinja_environment.get_template('tripinfo.html')
         self.response.write(template.render(vals))
     def post(self):
+        action = self.request.get('action')
+        user = users.get_current_user()
+        query = User.query(User.email==user.email()).get()
+        userkey = query.key
         urlsafe_key = self.request.get('key')
         key = ndb.Key(urlsafe=urlsafe_key)
         trip = key.get()
-        tripname = self.request.get('tripname')
-        trippw = self.request.get('trippw')
-        trip.tripname = tripname
-        trip.trippassword = trippw
-        trip.put()
+        if action == 'comment':
+            text = self.request.get('text')
+            newcomment = Comment(text=text, user_key=userkey, trip_key=key)
+            newcomment.put()
+        else:
+            tripname = self.request.get('tripname')
+            trippw = self.request.get('trippw')
+            trip.tripname = tripname
+            trip.trippassword = trippw
+            trip.put()
         self.redirect(trip.url())
 
 class JoinTripHandler(webapp2.RequestHandler):
@@ -224,7 +241,6 @@ class CreateAccountHandler(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
         name = self.request.get('name')
-        username = self.request.get('username')
         personality = self.request.get('personality')
         music = self.request.get('music')
         food = self.request.get('food')
