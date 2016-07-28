@@ -32,12 +32,20 @@
     <!-- Content -->
     <section class="content">
       <h2 class="tripinfo">{{ trip.tripname }}</h2>
+
+      <!-- Display the trip destination -->
+      <div class="destination">
+        <p>Destination: {{ trip.destination }}</p>
+      </div>
+
+      <!-- Car block -->
       {% for car in cars %}
         <div class="car">
           <!-- Display the driver name -->
           <div class="names">
             <h3 id="drivername">{{ car.driver_key.get().name }}</h3>
           </div>
+
           <!-- div for the background car image -->
           <div class="container">
             <!-- Display the list of passenger names -->
@@ -52,78 +60,101 @@
         </div>
       {% endfor %}
 
+      <!-- Map -->
+      <div class="map" id="map_canvas" style="width:450px; height:300px;">
+        <script type="text/javascript">
+          var geocoder;
+          var map;
+          var address ="{{trip.destination}}";
+          function initialize() {
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(-34.397, 150.644);
+            var myOptions = {
+              zoom: 8,
+              center: latlng,
+            mapTypeControl: true,
+            mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+            navigationControl: true,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            if (geocoder) {
+              geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+                  map.setCenter(results[0].geometry.location);
+
+                    var infowindow = new google.maps.InfoWindow(
+                        { content: '<b>'+address+'</b>',
+                          size: new google.maps.Size(150,50)
+                        });
+
+                    var marker = new google.maps.Marker({
+                        position: results[0].geometry.location,
+                        map: map,
+                        title:address
+                    });
+                    google.maps.event.addListener(marker, 'click', function() {
+                        infowindow.open(map,marker);
+                    });
+
+                  } else {
+                    alert("No results found");
+                  }
+                } else {
+                  alert("Geocode was not successful for the following reason: " + status);
+                }
+              });
+            }
+          }
+        </script>
+      </div>
+
+      <!-- Edit Trip Button -->
       <div id="edittrip">
         <button><a href="/edittrip?key={{trip.key.urlsafe()}}">Edit Trip</a></button>
       </div>
+
+      <hr>
+
+      <!-- Comments -->
+      <h3>Comments</h3>
+
+      <!-- Post comments -->
+      <div class="postcomments">
+        <form method="post" action="{{ trip.url() }}">
+          <h4>
+            Post a comment:<br>
+            <div class="note">
+              To make a new line, type "&lt;br&gt;" at the end of the line.
+            </div>
+            <textarea class="commenttextarea" name="text" placeholder="Comment goes here" rows="5" cols="50"></textarea><br>
+            <input type="hidden" name="action" value="comment">
+            <button type="submit" value="Submit">Post Comment</button>
+          </h4>
+        </form>
+      </div>
+
+      <!-- List comments -->
+      <div class="listcomments">
+        {% for comment in comments %}
+          <article class="comment">
+            <p>
+              <div class="commentname">
+                <strong>{{comment.user_key.get().name}}</strong><br>
+              </div>
+
+              <div class="commenttext">
+                {{comment.text}}
+              </div>
+
+              <div class="date">
+                Posted on: {{ comment.date }}
+              </div>
+            </p>
+          </article>
+        {% endfor %}
+      </div>
     </section>
-
-    <!-- Post comments -->
-    <form method="post" action="{{ trip.url() }}">
-      <p>
-        Enter a comment:<br>
-        <textarea name="text" placeholder="Comment goes here"></textarea>
-      </p>
-      <br>
-      <input type="hidden" name="action" value="comment">
-      <button type="submit" value="Submit">Post Comment</button>
-    </form>
-
-    <!-- List comments -->
-    {% for comment in comments %}
-      <article>
-        <h3>
-          {{comment.user_key.get().name}}
-        </h3>
-        {{comment.text}}
-        <div class="date">{{ comment.date }}</div>
-      </article>
-    {% endfor %}
-    <div id="map_canvas" style="width:300px; height:250px;">
-    <script type="text/javascript">
-      var geocoder;
-      var map;
-      var address ="{{trip.destination}}";
-      function initialize() {
-        geocoder = new google.maps.Geocoder();
-        var latlng = new google.maps.LatLng(-34.397, 150.644);
-        var myOptions = {
-          zoom: 8,
-          center: latlng,
-        mapTypeControl: true,
-        mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
-        navigationControl: true,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-        if (geocoder) {
-          geocoder.geocode( { 'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-              map.setCenter(results[0].geometry.location);
-
-                var infowindow = new google.maps.InfoWindow(
-                    { content: '<b>'+address+'</b>',
-                      size: new google.maps.Size(150,50)
-                    });
-
-                var marker = new google.maps.Marker({
-                    position: results[0].geometry.location,
-                    map: map,
-                    title:address
-                });
-                google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.open(map,marker);
-                });
-
-              } else {
-                alert("No results found");
-              }
-            } else {
-              alert("Geocode was not successful for the following reason: " + status);
-            }
-          });
-        }
-      }
-    </script>
   </body>
 </html>
