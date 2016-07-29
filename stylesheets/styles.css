@@ -144,6 +144,7 @@ div.car {
   padding-bottom: 5px;
   padding-left: 25px;
   color: white;
+  overflow: auto; /* Scrollable if it overflows */
 }
 
 .names li {
