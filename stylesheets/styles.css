@@ -81,7 +81,6 @@ li.active, li.active a {
   padding-bottom: 10px;
   border-radius: 20px;
   overflow: hidden;
-  opacity: 0.9;
 }
 /* End of content */
 
@@ -93,11 +92,18 @@ button {
   text-decoration: none;
   border-radius: none;
   border: solid 1px #EBEBEB; /* gmaps gray */
+  font-family: 'Comfortaa', cursive;
 }
 /* End of theme */
 
 
 /* Home page */
+#appnamehome {
+  font-family: 'Bungee Hairline', cursive;
+  font-size: 80px;
+  margin: 10px 0px;
+}
+
 body.home {
   background: url(/images/travelling4.jpg);
   background-size: cover;
@@ -144,8 +150,8 @@ div.car {
   color: white;
 }
 
-/* Trip name */
-.tripinfo {
+/* Trip name and destination */
+.tripinfo, .destination {
   padding-left: 25px;
 }
 
@@ -155,11 +161,43 @@ div.car {
   color: #A18261; /* gmaps brown */
 }
 
+/* Map */
+.map {
+  margin: 15px auto;
+}
+
 /* Edit trip button */
 #edittrip {
   width: 100%;
   display: inline-block;
 }
+
+/* Beginning of comments */
+.note {
+  font-size: 12px;
+}
+
+.commenttextarea {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+/* List of comments */
+.comment {
+  background-color: white;
+  border: solid 1px #EBEBEB; /* gmaps gray */
+  margin: 10px 10%;
+  padding: 10px;
+}
+
+.commentname {
+  margin-bottom: 10px;
+}
+
+.commenttext{
+  margin: 10px 0px;
+}
+/* End of comments */
 /* End of tripinfo.html */
 
 
@@ -189,7 +227,9 @@ input {
 }
 /* End of forms */
 
+
 hr {
+  margin: 50px 0;
   padding: 0 25%;
   border: 0;
   height: 1px;

@@ -5,21 +5,20 @@
     <link rel="stylesheet" href="/stylesheets/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Bungee+Hairline' rel='stylesheet' type='text/css'>
-    <img src="images/pearlogo.png" id="pearlogo"/>
+    <img src="images/whitepear.png" id="pearlogo"/>
   </head>
 
   <body class="home">
     <div>
       <br><br><br><br><br><br><br><br>
-      <strong><h1>Pear</h1></strong>
-      <!-- Sign in link -->
-      Pairing friends' preferances to optimize your commute since 2016.
-      <br><br>
+      <strong><h1 id="appnamehome">Pear</h1></strong>
+      <p>Pearing friends' preferences to optimize your commute since 2016.</p>
       {% if not isloggedin: %}
         <button><a href="{{login_url}}" class="button">Sign In</a></button>
-      <br><br>
+        <br><br>
+      {% else: %}
+        <button><a href="/newaccount" class="button">Create Account</a></button>
       {% endif %}
-      <button><a href="/newaccount" class="button">Create Account</a></button>
     </div>
   </body>
 </html>
