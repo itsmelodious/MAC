@@ -188,6 +188,7 @@ div.car {
   border: solid 1px #EBEBEB; /* gmaps gray */
   margin: 10px 10%;
   padding: 10px;
+  overflow: scroll
 }
 
 .commentname {
