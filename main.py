@@ -229,6 +229,8 @@ class TripInfoHandler(webapp2.RequestHandler):
         else:
             tripname = self.request.get('tripname')
             trippw = self.request.get('trippw')
+            destination = self.request.get('destination')
+            trip.destination = destination
             trip.tripname = tripname
             trip.trippassword = trippw
             trip.put()
