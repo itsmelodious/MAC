@@ -306,11 +306,6 @@ class DeleteTripHandler(webapp2.RequestHandler):
             carquery.put()
         trip.user_key.remove(userquery.key)
         trip.put()
-        # trip = Trip.query(Trip.user_key==userquery.key).get()
-        # for trip.user_key:
-
-            # if
-        # tripuser.delete()
         self.redirect('/mainpage')
 
 app = webapp2.WSGIApplication([
