@@ -32,17 +32,17 @@
         <h2>Edit Trip</h2>
         <h3>
           Trip Name:
-          <input type="text" name="tripname" value="{{ trip.tripname }}">
+          <input type="text" name="tripname" value="{{ trip.tripname }}" required>
         </h3>
 
         <h3>
           Trip Password:
-          <input type="text" name="trippw" value="{{ trip.trippassword }}">
+          <input type="text" name="trippw" value="{{ trip.trippassword }}" required>
         </h3>
 
         <h3>
           Trip Destination:
-          <input type="text" name="destination" value="{{ trip.destination }}">
+          <input type="text" name="destination" value="{{ trip.destination }}" required>
          </h3>
 
         <button type="submit" value="Submit">Update Trip</button><br>

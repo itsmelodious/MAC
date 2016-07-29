@@ -31,14 +31,14 @@
 
       <form method="post" action ="/mainpage">
           <p>
-            <input type="text" name="tripname" placeholder="Name of the trip"><br>
-            <input type="password" name="trippw" placeholder="Trip Password"><br>
-            <input type="text" name="destination" placeholder="Destination (Address)"><br>
+            <input type="text" name="tripname" placeholder="Name of the trip" required><br>
+            <input type="password" name="trippw" placeholder="Trip Password" required><br>
+            <input type="text" name="destination" placeholder="Destination (Address)" required><br>
             <input type="hidden" name="action" value="create">
           </p>
           <p>
             How many seats are in your car? (including yourself)<br>
-            <input type="number" name="seats" placeholder="Enter a number">
+            <input type="number" name="seats" placeholder="Enter a number" required>
           </p>
         <button type="submit" value="Submit">Create Trip</button>
       </form>
