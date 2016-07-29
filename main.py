@@ -265,6 +265,48 @@ class EditUserHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('edituser.html')
         self.response.write(template.render(vals))
 
+class DeleteTripHandler(webapp2.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        urlsafe_key = self.request.get('key')
+        key = ndb.Key(urlsafe=urlsafe_key)
+        trip = key.get()
+        userquery = User.query(User.email==user.email()).get()
+        if userquery.name in trip.drivers:
+            drivercar = Car.query(Car.driver_key==userquery.key).get()
+            passengers = drivercar.passengers_key
+            drivercar.key.delete()
+            cars = Car.query().fetch()
+            winningpoints = -1
+            winningcar = None
+            for passenger in passengers:
+                for car in cars:
+                    if not len(car.passengers_key)<(car.seats-1):
+                        continue
+                    points=algorithm(car.driver_key.get(), passenger.get())
+                    if points >= winningpoints:
+                        winningpoints = points
+                        winningcar = car
+                if winningcar:
+                    winningcar.passengers_key.append(passenger)
+                else:
+                    self.response.write('No space left in the cars!')
+                    return
+                trip.put()
+                winningcar.put()
+        else:
+            carquery = Car.query(Car.passengers_key==userquery.key).get()
+            carquery.passengers_key.remove(userquery.key)
+            carquery.put()
+        trip.user_key.remove(userquery.key)
+        trip.put()
+        # trip = Trip.query(Trip.user_key==userquery.key).get()
+        # for trip.user_key:
+
+            # if
+        # tripuser.delete()
+        self.redirect('/mainpage')
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
@@ -275,5 +317,6 @@ app = webapp2.WSGIApplication([
     ('/newtrip', CreateTripHandler),
     ('/tripinfo', TripInfoHandler),
     ('/jointrip', JoinTripHandler),
-    ('/edittrip', EditTripHandler)
+    ('/edittrip', EditTripHandler),
+    ('/deletetrip',DeleteTripHandler)
 ], debug=True)
